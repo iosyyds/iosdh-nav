@@ -1,39 +1,40 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import {
-  categories as defaultCategories,
-  navGroups,
-  type NavGroup,
-  type Site,
-} from "@/lib/sites";
+import { type NavGroup, type Site } from "@/lib/sites";
 import SearchBox from "@/components/SearchBox";
 import SiteCard from "@/components/SiteCard";
 import TopAd from "@/components/TopAd";
-import { loadAdminData } from "@/lib/adminStore";
+import { loadSiteData, type SiteData } from "@/lib/dataLoader";
 
-const ALL_CATS = Object.keys(defaultCategories);
+// 每个分组默认展示的站点数，超过则折叠
+const DEFAULT_VISIBLE = 10;
 
 export default function Home() {
-  const [categories, setCategories] = useState(defaultCategories);
+  const [data, setData] = useState<SiteData | null>(null);
   const [query, setQuery] = useState("");
   const [activeGroup, setActiveGroup] = useState<string>("all");
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const resultRef = useRef<HTMLDivElement>(null);
 
-  // load admin-overridden data (localStorage) once on mount
+  // 加载云端数据
   useEffect(() => {
-    setCategories(loadAdminData());
+    loadSiteData().then(setData);
   }, []);
 
+  const categories = data?.categories ?? {};
+  const navGroups = data?.navGroups ?? [];
   const TOTAL = useMemo(
     () => Object.values(categories).reduce((n, c) => n + c.length, 0),
     [categories]
   );
+  const totalCats = Object.keys(categories).length;
 
   const q = query.trim().toLowerCase();
 
   const filtered: { group: NavGroup; sites: { site: Site; cat: string }[] }[] =
     useMemo(() => {
+      if (!data) return [];
       return navGroups
         .filter((g) => activeGroup === "all" || g.id === activeGroup)
         .map((g) => {
@@ -54,13 +55,15 @@ export default function Home() {
           return { group: g, sites: matched };
         })
         .filter((x) => x.sites.length > 0);
-    }, [activeGroup, q, categories]);
+    }, [activeGroup, q, categories, navGroups, data]);
 
   const matchedCount = filtered.reduce((n, x) => n + x.sites.length, 0);
 
   const handleSearch = (v: string) => {
     setQuery(v);
     setActiveGroup("all");
+    // 搜索时自动展开所有分组
+    setExpanded({});
     requestAnimationFrame(() => {
       resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
@@ -71,7 +74,21 @@ export default function Home() {
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const totalCats = ALL_CATS.length;
+  const toggleExpand = (groupId: string) => {
+    setExpanded((prev) => ({ ...prev, [groupId]: !prev[groupId] }));
+  };
+
+  // 加载中
+  if (!data) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="h-10 w-10 rounded-xl bg-[#6366f1] animate-pulse mx-auto" />
+          <p className="font-sans text-sm text-gray-400 mt-4">正在加载站点数据…</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col flex-1">
@@ -132,7 +149,6 @@ export default function Home() {
         id="featured"
         className="relative bg-white text-[#0f172a] py-12 md:py-16 lg:py-20 px-4 md:px-6 lg:px-8 overflow-hidden"
       >
-        {/* subtle decorative gradient blob */}
         <div
           className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-[#6366f1]/10 blur-3xl"
           aria-hidden="true"
@@ -237,33 +253,45 @@ export default function Home() {
               </p>
             </div>
           )}
-          {filtered.map(({ group, sites }) => (
-            <div
-              key={group.id}
-              id={`group-${group.id}`}
-              className="scroll-mt-20"
-            >
-              <div className="flex items-center justify-between gap-4 mb-6 md:mb-8">
-                <div>
-                  <h2 className="font-bold tracking-tight text-2xl md:text-3xl flex items-center gap-2">
-                    <span>{group.icon}</span>
-                    {group.name}
-                  </h2>
-                  <p className="font-sans text-sm text-gray-400 mt-1">
-                    {group.desc}
-                  </p>
+          {filtered.map(({ group, sites }) => {
+            const isExpanded = !!expanded[group.id] || !!q;
+            const visibleSites = isExpanded ? sites : sites.slice(0, DEFAULT_VISIBLE);
+            const hiddenCount = sites.length - DEFAULT_VISIBLE;
+            return (
+              <div key={group.id} id={`group-${group.id}`} className="scroll-mt-20">
+                <div className="flex items-center justify-between gap-4 mb-6 md:mb-8">
+                  <div>
+                    <h2 className="font-bold tracking-tight text-2xl md:text-3xl flex items-center gap-2">
+                      <span>{group.icon}</span>
+                      {group.name}
+                    </h2>
+                    <p className="font-sans text-sm text-gray-400 mt-1">{group.desc}</p>
+                  </div>
+                  <span className="font-sans text-xs text-gray-400 bg-white border border-gray-200 rounded-xl px-3 py-1.5 shrink-0">
+                    {sites.length} 个站点
+                  </span>
                 </div>
-                <span className="font-sans text-xs text-gray-400 bg-white border border-gray-200 rounded-xl px-3 py-1.5 shrink-0">
-                  {sites.length} 个站点
-                </span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
+                  {visibleSites.map(({ site, cat }) => (
+                    <SiteCard key={site.id} site={site} category={cat} />
+                  ))}
+                </div>
+                {/* 查看更多 / 收起 */}
+                {hiddenCount > 0 && (
+                  <div className="flex justify-center mt-6">
+                    <button
+                      onClick={() => toggleExpand(group.id)}
+                      className="rounded-xl font-semibold transition-all duration-300 bg-white text-[#6366f1] border border-[#6366f1]/30 px-6 py-2.5 text-sm hover:scale-[1.02] hover:bg-[#6366f1] hover:text-white hover:shadow-lg hover:shadow-[#6366f1]/25 active:scale-95"
+                    >
+                      {isExpanded
+                        ? "收起 ↑"
+                        : `查看更多（还有 ${hiddenCount} 个）↓`}
+                    </button>
+                  </div>
+                )}
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
-                {sites.map(({ site, cat }) => (
-                  <SiteCard key={site.id} site={site} category={cat} />
-                ))}
-              </div>
-            </div>
-          ))}
+            );
+          })}
           {filtered.length === 0 && (
             <div className="text-center py-16">
               <h3 className="font-bold tracking-tight text-xl text-[#0f172a]">
@@ -385,10 +413,7 @@ export default function Home() {
                   </button>
                 </li>
                 <li>
-                  <a
-                    href="/admin"
-                    className="hover:text-[#6366f1] transition-colors"
-                  >
+                  <a href="/admin" className="hover:text-[#6366f1] transition-colors">
                     管理后台
                   </a>
                 </li>
