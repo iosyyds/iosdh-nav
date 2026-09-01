@@ -340,6 +340,120 @@
         "name": "叶子库网盘",
         "url": "https://pan.yeziku.cn",
         "desc": "叶子库网盘iOS资源网盘分享"
+      },
+      {
+        "id": "new_20001",
+        "name": "叶子库导航",
+        "url": "https://yeziku.cn/",
+        "desc": "iOS资源分享导航站"
+      },
+      {
+        "id": "new_20002",
+        "name": "知舟网盘",
+        "url": "https://zhizhoupan.com/",
+        "desc": "为果粉提供的资源站"
+      },
+      {
+        "id": "new_20003",
+        "name": "巨魔网盘",
+        "url": "https://jumo.app/",
+        "desc": "免费分享iOS应用"
+      },
+      {
+        "id": "new_20004",
+        "name": "X先生资源",
+        "url": "https://x先生.com/",
+        "desc": "专注iOS应用分享"
+      },
+      {
+        "id": "new_20005",
+        "name": "iOS福利社",
+        "url": "https://iosfulishe.com/",
+        "desc": "iOS福利资源网盘"
+      },
+      {
+        "id": "new_20006",
+        "name": "GistWillian网盘",
+        "url": "https://gistwillian.com/",
+        "desc": "iOS资源网盘"
+      },
+      {
+        "id": "new_20007",
+        "name": "DaPeng导航",
+        "url": "https://dapengdh.com/",
+        "desc": "优质网站网址导航"
+      },
+      {
+        "id": "new_20008",
+        "name": "iklassika",
+        "url": "https://iklassika.ru/",
+        "desc": "IPA下载站"
+      },
+      {
+        "id": "new_20009",
+        "name": "灵风软件站",
+        "url": "https://www.lfapp.cn/",
+        "desc": "iOS软件下载站"
+      },
+      {
+        "id": "new_20010",
+        "name": "哦游Max",
+        "url": "https://www.oyoumax.com/",
+        "desc": "属于iOS玩家的网站"
+      },
+      {
+        "id": "new_20011",
+        "name": "AppDoge",
+        "url": "https://www.appdoge.com/",
+        "desc": "iOS应用商店"
+      },
+      {
+        "id": "new_20012",
+        "name": "iOSHero",
+        "url": "https://www.ioshero.com/",
+        "desc": "老iPhone软件站"
+      },
+      {
+        "id": "new_20013",
+        "name": "4ios资源",
+        "url": "https://www.4ios.cn/",
+        "desc": "苹果企业签名资源"
+      },
+      {
+        "id": "new_20014",
+        "name": "果粉社区",
+        "url": "https://www.guofen.com/",
+        "desc": "苹果用户社区"
+      },
+      {
+        "id": "new_20015",
+        "name": "iOS123",
+        "url": "https://www.ios123.com/",
+        "desc": "iOS资源分享"
+      },
+      {
+        "id": "new_20016",
+        "name": "苹果核",
+        "url": "https://www.applecore.com/",
+        "desc": "苹果资源社区"
+      },
+      {
+        "id": "new_20017",
+        "name": "iOS今日推荐",
+        "url": "https://www.iostoday.com/",
+        "desc": "每日iOS应用推荐"
+      },
+      {
+        "id": "new_20018",
+        "name": "玩iOS",
+        "url": "https://www.wanios.com/",
+        "desc": "iOS玩机资源"
+      },
+      {
+        "id": "new_20019",
+        "name": "果核",
+        "url": "https://www.guohe.com/",
+        "desc": "苹果资源分享"
       }
     ],
     "iOS捷径": [
@@ -1032,6 +1146,126 @@
         "name": "iOS优质应用",
         "url": "https://t.me/ioskk",
         "desc": "iOS优质应用Telegram资"
+      },
+      {
+        "id": "new_20020",
+        "name": "TGStat",
+        "url": "https://tgstat.com/",
+        "desc": "Telegram频道统计"
+      },
+      {
+        "id": "new_20021",
+        "name": "Telegram Channels",
+        "url": "https://telegramchannels.me/",
+        "desc": "TG频道目录"
+      },
+      {
+        "id": "new_20022",
+        "name": "Tdirectory",
+        "url": "https://tdirectory.me/",
+        "desc": "TG群组导航"
+      },
+      {
+        "id": "new_20023",
+        "name": "Telemetrio",
+        "url": "https://telemetr.io/",
+        "desc": "TG频道分析"
+      },
+      {
+        "id": "new_20024",
+        "name": "TLGRM",
+        "url": "https://tlgrm.eu/channels",
+        "desc": "TG搜索引擎"
+      },
+      {
+        "id": "new_20025",
+        "name": "Telegram Store",
+        "url": "https://cn.telegram-store.com/",
+        "desc": "TG商店导航"
+      },
+      {
+        "id": "new_20026",
+        "name": "DBZDK",
+        "url": "https://dbzdk.com/",
+        "desc": "中文优质频道推荐"
+      },
+      {
+        "id": "new_20027",
+        "name": "awesome-telegram",
+        "url": "https://github.com/itgoyo/awesome-telegram",
+        "desc": "TG资源合集"
+      },
+      {
+        "id": "new_20028",
+        "name": "TG-NAV",
+        "url": "https://tg-nav.github.io/",
+        "desc": "TG频道群组导航"
+      },
+      {
+        "id": "new_20029",
+        "name": "Telegram Group",
+        "url": "https://telegram-group.com/",
+        "desc": "TG群组目录"
+      },
+      {
+        "id": "new_20030",
+        "name": "TG搜索",
+        "url": "https://tgsearch.com/",
+        "desc": "TG资源搜索"
+      },
+      {
+        "id": "new_20031",
+        "name": "电报群",
+        "url": "https://dianbaoqun.com/",
+        "desc": "中文TG群组导航"
+      },
+      {
+        "id": "new_20032",
+        "name": "TG导航",
+        "url": "https://tgdh.com/",
+        "desc": "Telegram导航站"
+      },
+      {
+        "id": "new_20033",
+        "name": "纸飞机导航",
+        "url": "https://zhifeiji.com/",
+        "desc": "TG频道导航"
+      },
+      {
+        "id": "new_20034",
+        "name": "TG中文社区",
+        "url": "https://tgcn.com/",
+        "desc": "中文TG社区"
+      },
+      {
+        "id": "new_20035",
+        "name": "电报导航",
+        "url": "https://dianbaodh.com/",
+        "desc": "TG资源导航"
+      },
+      {
+        "id": "new_20036",
+        "name": "TG群组大全",
+        "url": "https://tgqun.com/",
+        "desc": "TG群组大全"
+      },
+      {
+        "id": "new_20037",
+        "name": "Telegram中文网",
+        "url": "https://telegram-cn.com/",
+        "desc": "TG中文资源"
+      },
+      {
+        "id": "new_20038",
+        "name": "TG频道推荐",
+        "url": "https://tgtj.com/",
+        "desc": "TG频道推荐"
+      },
+      {
+        "id": "new_20039",
+        "name": "电报资源",
+        "url": "https://dianbaozy.com/",
+        "desc": "TG资源分享"
       }
     ],
     "在线配色": [
@@ -1534,6 +1768,78 @@
         "name": "JSON在线解析",
         "url": "https://www.json.cn/",
         "desc": "JSON格式化工具"
+      },
+      {
+        "id": "new_20108",
+        "name": "在线二维码生成",
+        "url": "https://cli.im/",
+        "desc": "二维码生成器"
+      },
+      {
+        "id": "new_20109",
+        "name": "短链接生成",
+        "url": "https://dwz.cn/",
+        "desc": "百度短链接"
+      },
+      {
+        "id": "new_20110",
+        "name": "图片压缩",
+        "url": "https://tinypng.com/",
+        "desc": "在线图片压缩"
+      },
+      {
+        "id": "new_20111",
+        "name": "PDF工具",
+        "url": "https://smallpdf.com/",
+        "desc": "PDF在线处理"
+      },
+      {
+        "id": "new_20112",
+        "name": "在线翻译",
+        "url": "https://fanyi.baidu.com/",
+        "desc": "百度翻译"
+      },
+      {
+        "id": "new_20113",
+        "name": "有道翻译",
+        "url": "https://fanyi.youdao.com/",
+        "desc": "有道翻译"
+      },
+      {
+        "id": "new_20114",
+        "name": "在线OCR",
+        "url": "https://ocr.space/",
+        "desc": "图片文字识别"
+      },
+      {
+        "id": "new_20115",
+        "name": "颜色拾取器",
+        "url": "https://color.hailpixel.com/",
+        "desc": "在线配色工具"
+      },
+      {
+        "id": "new_20116",
+        "name": "在线计算器",
+        "url": "https://www.calculator.net/",
+        "desc": "科学计算器"
+      },
+      {
+        "id": "new_20117",
+        "name": "单位换算",
+        "url": "https://www.unitconverters.net/",
+        "desc": "单位换算工具"
+      },
+      {
+        "id": "new_20118",
+        "name": "时间戳转换",
+        "url": "https://tool.chinaz.com/tools/unixtime.aspx",
+        "desc": "时间戳转换"
+      },
+      {
+        "id": "new_20119",
+        "name": "Markdown编辑器",
+        "url": "https://markdown.com.cn/editor/",
+        "desc": "在线Markdown"
       }
     ],
     "界面设计": [
@@ -1632,6 +1938,78 @@
         "name": "优设网",
         "url": "https://www.uisdc.com/",
         "desc": "设计学习平台"
+      },
+      {
+        "id": "new_20157",
+        "name": "Dribbble",
+        "url": "https://dribbble.com/",
+        "desc": "UI视觉潮流灵感"
+      },
+      {
+        "id": "new_20158",
+        "name": "Behance",
+        "url": "https://www.behance.net/",
+        "desc": "全球设计作品"
+      },
+      {
+        "id": "new_20159",
+        "name": "Siteinspire",
+        "url": "https://www.siteinspire.com/",
+        "desc": "网站设计灵感"
+      },
+      {
+        "id": "new_20160",
+        "name": "Godly",
+        "url": "https://godly.website/",
+        "desc": "网站设计灵感"
+      },
+      {
+        "id": "new_20161",
+        "name": "Lapa Ninja",
+        "url": "https://lapa.ninja/",
+        "desc": "着陆页设计灵感"
+      },
+      {
+        "id": "new_20162",
+        "name": "Land-book",
+        "url": "https://land-book.com/",
+        "desc": "着陆页设计"
+      },
+      {
+        "id": "new_20163",
+        "name": "SaaS Landing Page",
+        "url": "https://saaslandingpage.com/",
+        "desc": "SaaS着陆页"
+      },
+      {
+        "id": "new_20164",
+        "name": "UI Movement",
+        "url": "https://uimovement.com/",
+        "desc": "UI动效灵感"
+      },
+      {
+        "id": "new_20165",
+        "name": "Collect UI",
+        "url": "https://collectui.com/",
+        "desc": "UI设计灵感"
+      },
+      {
+        "id": "new_20166",
+        "name": "UI Garage",
+        "url": "https://uigarage.net/",
+        "desc": "UI设计资源"
+      },
+      {
+        "id": "new_20167",
+        "name": "Inspiration UI",
+        "url": "https://inspirationui.com/",
+        "desc": "UI灵感"
+      },
+      {
+        "id": "new_20168",
+        "name": "Screenlane",
+        "url": "https://screenlane.com/",
+        "desc": "移动UI设计"
       }
     ],
     "平面素材": [
@@ -1724,6 +2102,96 @@
         "name": "365PSD",
         "url": "https://365psd.com",
         "desc": "365PSD平面设计素材"
+      },
+      {
+        "id": "new_20142",
+        "name": "Freepik",
+        "url": "https://www.freepik.com/",
+        "desc": "矢量图PSD素材"
+      },
+      {
+        "id": "new_20143",
+        "name": "Pixeden",
+        "url": "https://www.pixeden.com/",
+        "desc": "设计资源"
+      },
+      {
+        "id": "new_20144",
+        "name": "包图网",
+        "url": "https://ibaotu.com/",
+        "desc": "设计素材"
+      },
+      {
+        "id": "new_20145",
+        "name": "摄图网",
+        "url": "https://699pic.com/",
+        "desc": "图片素材"
+      },
+      {
+        "id": "new_20146",
+        "name": "红动中国",
+        "url": "https://www.redocn.com/",
+        "desc": "设计素材"
+      },
+      {
+        "id": "new_20147",
+        "name": "觅元素",
+        "url": "https://www.51yuansu.com/",
+        "desc": "PNG素材"
+      },
+      {
+        "id": "new_20148",
+        "name": "PNGtree",
+        "url": "https://pngtree.com/",
+        "desc": "PNG素材"
+      },
+      {
+        "id": "new_20149",
+        "name": "Vecteezy",
+        "url": "https://www.vecteezy.com/",
+        "desc": "矢量素材"
+      },
+      {
+        "id": "new_20150",
+        "name": "VectorStock",
+        "url": "https://www.vectorstock.com/",
+        "desc": "矢量素材"
+      },
+      {
+        "id": "new_20151",
+        "name": "Shutterstock",
+        "url": "https://www.shutterstock.com/",
+        "desc": "正版素材"
+      },
+      {
+        "id": "new_20152",
+        "name": "Adobe Stock",
+        "url": "https://stock.adobe.com/",
+        "desc": "正版素材"
+      },
+      {
+        "id": "new_20153",
+        "name": "123RF",
+        "url": "https://www.123rf.com/",
+        "desc": "正版素材"
+      },
+      {
+        "id": "new_20154",
+        "name": "视觉中国",
+        "url": "https://www.vcg.com/",
+        "desc": "正版图片"
+      },
+      {
+        "id": "new_20155",
+        "name": "图虫创意",
+        "url": "https://stock.tuchong.com/",
+        "desc": "正版图片"
+      },
+      {
+        "id": "new_20156",
+        "name": "东方IC",
+        "url": "https://www.dfic.cn/",
+        "desc": "正版图片"
       }
     ],
     "LOGO设计": [
@@ -2166,6 +2634,108 @@
         "name": "Openclipart",
         "url": "https://openclipart.org",
         "desc": "公有领域剪贴画库"
+      },
+      {
+        "id": "new_20040",
+        "name": "SVG Repo",
+        "url": "https://www.svgrepo.com/",
+        "desc": "50万+纯SVG图标"
+      },
+      {
+        "id": "new_20041",
+        "name": "IconPark",
+        "url": "https://iconpark.oceanengine.com/",
+        "desc": "字节图标库"
+      },
+      {
+        "id": "new_20042",
+        "name": "Iconfont",
+        "url": "https://www.iconfont.cn/",
+        "desc": "阿里图标库"
+      },
+      {
+        "id": "new_20043",
+        "name": "Feather Icons",
+        "url": "https://feathericons.com/",
+        "desc": "极简线性图标"
+      },
+      {
+        "id": "new_20044",
+        "name": "Phosphor Icons",
+        "url": "https://phosphoricons.com/",
+        "desc": "灵活图标库"
+      },
+      {
+        "id": "new_20045",
+        "name": "Iconsax",
+        "url": "https://iconsax.io/",
+        "desc": "现代风格图标"
+      },
+      {
+        "id": "new_20046",
+        "name": "Boxicons",
+        "url": "https://boxicons.com/",
+        "desc": "免费新潮图标"
+      },
+      {
+        "id": "new_20047",
+        "name": "Font Awesome",
+        "url": "https://fontawesome.com/",
+        "desc": "经典图标库"
+      },
+      {
+        "id": "new_20048",
+        "name": "Bootstrap Icons",
+        "url": "https://icons.getbootstrap.com/",
+        "desc": "Bootstrap图标"
+      },
+      {
+        "id": "new_20049",
+        "name": "Iconoir",
+        "url": "https://iconoir.com/",
+        "desc": "开源图标库"
+      },
+      {
+        "id": "new_20050",
+        "name": "Material Icons",
+        "url": "https://fonts.google.com/icons",
+        "desc": "Google材料图标"
+      },
+      {
+        "id": "new_20051",
+        "name": "Flaticon",
+        "url": "https://www.flaticon.com/",
+        "desc": "海量图标下载"
+      },
+      {
+        "id": "new_20052",
+        "name": "Icons8",
+        "url": "https://icons8.com/",
+        "desc": "图标插画合集"
+      },
+      {
+        "id": "new_20053",
+        "name": "Simple Icons",
+        "url": "https://simpleicons.org/",
+        "desc": "品牌图标"
+      },
+      {
+        "id": "new_20054",
+        "name": "svgl.app",
+        "url": "https://svgl.app/",
+        "desc": "品牌logo SVG"
+      },
+      {
+        "id": "new_20055",
+        "name": "Streamline Icons",
+        "url": "https://streamlinehq.com/",
+        "desc": "36万+图标"
+      },
+      {
+        "id": "new_20056",
+        "name": "Ionicons",
+        "url": "https://ionic.io/ionicons",
+        "desc": "应用图标库"
       }
     ],
     "UI资源": [
@@ -2270,6 +2840,90 @@
         "name": "Invision Downloads",
         "url": "https://www.invisionapp.com/inside-design",
         "desc": "免费UI套件"
+      },
+      {
+        "id": "new_20169",
+        "name": "Sketch App Sources",
+        "url": "https://www.sketchappsources.com/",
+        "desc": "Sketch资源"
+      },
+      {
+        "id": "new_20170",
+        "name": "UIkit",
+        "url": "https://getuikit.com/",
+        "desc": "前端UI框架"
+      },
+      {
+        "id": "new_20171",
+        "name": "Ant Design",
+        "url": "https://ant.design/",
+        "desc": "蚂蚁设计体系"
+      },
+      {
+        "id": "new_20172",
+        "name": "Element",
+        "url": "https://element.eleme.io/",
+        "desc": "饿了么UI库"
+      },
+      {
+        "id": "new_20173",
+        "name": "Vuetify",
+        "url": "https://vuetifyjs.com/",
+        "desc": "Vue UI框架"
+      },
+      {
+        "id": "new_20174",
+        "name": "Tailwind UI",
+        "url": "https://tailwindui.com/",
+        "desc": "Tailwind组件"
+      },
+      {
+        "id": "new_20175",
+        "name": "Headless UI",
+        "url": "https://headlessui.com/",
+        "desc": "无样式组件"
+      },
+      {
+        "id": "new_20176",
+        "name": "Chakra UI",
+        "url": "https://chakra-ui.com/",
+        "desc": "React组件库"
+      },
+      {
+        "id": "new_20177",
+        "name": "MUI",
+        "url": "https://mui.com/",
+        "desc": "Material UI组件"
+      },
+      {
+        "id": "new_20178",
+        "name": "Bootstrap",
+        "url": "https://getbootstrap.com/",
+        "desc": "前端框架"
+      },
+      {
+        "id": "new_20179",
+        "name": "Bulma",
+        "url": "https://bulma.io/",
+        "desc": "CSS框架"
+      },
+      {
+        "id": "new_20180",
+        "name": "Semantic UI",
+        "url": "https://semantic-ui.com/",
+        "desc": "语义化UI"
+      },
+      {
+        "id": "new_20181",
+        "name": "Foundation",
+        "url": "https://get.foundation/",
+        "desc": "响应式框架"
+      },
+      {
+        "id": "new_20182",
+        "name": "Material Kit",
+        "url": "https://www.creative-tim.com/product/material-kit",
+        "desc": "Material设计套件"
       }
     ],
     "字体资源": [
@@ -2398,6 +3052,96 @@
         "name": "霞鹜文楷",
         "url": "https://github.com/lxgw/LxgwWenKai",
         "desc": "开源古籍楷体"
+      },
+      {
+        "id": "new_20057",
+        "name": "Google Fonts",
+        "url": "https://fonts.google.com/",
+        "desc": "开源字体平台"
+      },
+      {
+        "id": "new_20058",
+        "name": "Font Squirrel",
+        "url": "https://www.fontsquirrel.com/",
+        "desc": "免费商用字体"
+      },
+      {
+        "id": "new_20059",
+        "name": "FontShare",
+        "url": "https://www.fontshare.com/",
+        "desc": "免费英文字体"
+      },
+      {
+        "id": "new_20060",
+        "name": "UrbanFonts",
+        "url": "https://www.urbanfonts.com/",
+        "desc": "英文字体下载"
+      },
+      {
+        "id": "new_20061",
+        "name": "100font",
+        "url": "https://www.100font.com/",
+        "desc": "免费商用字体"
+      },
+      {
+        "id": "new_20062",
+        "name": "FontSpace",
+        "url": "https://www.fontspace.com/",
+        "desc": "免费英文字体"
+      },
+      {
+        "id": "new_20063",
+        "name": "求字体",
+        "url": "https://www.qiuziti.com/",
+        "desc": "字体识别"
+      },
+      {
+        "id": "new_20064",
+        "name": "汉仪字库",
+        "url": "https://www.hanyi.com.cn/",
+        "desc": "中文字体"
+      },
+      {
+        "id": "new_20065",
+        "name": "造字工房",
+        "url": "https://www.makefont.com/",
+        "desc": "中文字体"
+      },
+      {
+        "id": "new_20066",
+        "name": "文泉驿",
+        "url": "https://wenquanyi.org/",
+        "desc": "开源中文字体"
+      },
+      {
+        "id": "new_20067",
+        "name": "思源字体",
+        "url": "https://source.typekit.com/",
+        "desc": "Adobe开源字体"
+      },
+      {
+        "id": "new_20068",
+        "name": "字体天下",
+        "url": "https://www.fonts.net.cn/",
+        "desc": "免费商用字体"
+      },
+      {
+        "id": "new_20069",
+        "name": "字体家",
+        "url": "https://www.zitijia.com/",
+        "desc": "免费可商用字体"
+      },
+      {
+        "id": "new_20070",
+        "name": "自由字体",
+        "url": "https://ziyouziti.com/",
+        "desc": "免费商用字体"
+      },
+      {
+        "id": "new_20071",
+        "name": "DaFont",
+        "url": "https://www.dafont.com/",
+        "desc": "英文字体下载"
       }
     ],
     "摄影图库": [
@@ -2586,6 +3330,102 @@
         "name": "Magdeleine",
         "url": "https://magdeleine.co",
         "desc": "精选免费高清图库"
+      },
+      {
+        "id": "new_20072",
+        "name": "Pixabay",
+        "url": "https://pixabay.com/",
+        "desc": "免费图片视频"
+      },
+      {
+        "id": "new_20073",
+        "name": "Freepik",
+        "url": "https://www.freepik.com/",
+        "desc": "矢量图PSD素材"
+      },
+      {
+        "id": "new_20074",
+        "name": "Shopify Burst",
+        "url": "https://burst.shopify.com/",
+        "desc": "电商免费图片"
+      },
+      {
+        "id": "new_20075",
+        "name": "Kaboompics",
+        "url": "https://kaboompics.com/",
+        "desc": "免费图片素材"
+      },
+      {
+        "id": "new_20076",
+        "name": "Picjumbo",
+        "url": "https://picjumbo.com/",
+        "desc": "免费图片下载"
+      },
+      {
+        "id": "new_20077",
+        "name": "Negative Space",
+        "url": "https://negativespace.co/",
+        "desc": "免费图片"
+      },
+      {
+        "id": "new_20078",
+        "name": "Splitshire",
+        "url": "https://www.splitshire.com/",
+        "desc": "免费图片"
+      },
+      {
+        "id": "new_20079",
+        "name": "Gratisography",
+        "url": "https://gratisography.com/",
+        "desc": "免费图片"
+      },
+      {
+        "id": "new_20080",
+        "name": "New Old Stock",
+        "url": "https://nos.twnsnd.co/",
+        "desc": "老照片素材"
+      },
+      {
+        "id": "new_20081",
+        "name": "Public Domain Pictures",
+        "url": "https://www.publicdomainpictures.net/",
+        "desc": "公有领域图片"
+      },
+      {
+        "id": "new_20082",
+        "name": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/",
+        "desc": "维基共享资源"
+      },
+      {
+        "id": "new_20083",
+        "name": "500px",
+        "url": "https://500px.com/",
+        "desc": "摄影社区"
+      },
+      {
+        "id": "new_20084",
+        "name": "Flickr",
+        "url": "https://www.flickr.com/",
+        "desc": "摄影社区"
+      },
+      {
+        "id": "new_20085",
+        "name": "图虫创意",
+        "url": "https://stock.tuchong.com/",
+        "desc": "正版图片"
+      },
+      {
+        "id": "new_20086",
+        "name": "千库网",
+        "url": "https://588ku.com/",
+        "desc": "图片素材"
+      },
+      {
+        "id": "new_20087",
+        "name": "包图网",
+        "url": "https://ibaotu.com/",
+        "desc": "图片素材"
       }
     ],
     "其他网盘": [
@@ -2866,6 +3706,126 @@
         "name": "Claude",
         "url": "https://claude.ai",
         "desc": "Anthropic大模型助手"
+      },
+      {
+        "id": "new_20088",
+        "name": "发现AI",
+        "url": "https://faxianai.com/",
+        "desc": "AI工具导航"
+      },
+      {
+        "id": "new_20089",
+        "name": "AI工具集",
+        "url": "https://ai-bot.cn/",
+        "desc": "AI工具导航"
+      },
+      {
+        "id": "new_20090",
+        "name": "AIGC工具导航",
+        "url": "https://www.aig123.com/",
+        "desc": "AI工具大全"
+      },
+      {
+        "id": "new_20091",
+        "name": "AIH超级导航",
+        "url": "https://www.aimomap.cn/",
+        "desc": "AI工具导航"
+      },
+      {
+        "id": "new_20092",
+        "name": "Gamma",
+        "url": "https://gamma.app/",
+        "desc": "AI生成PPT"
+      },
+      {
+        "id": "new_20093",
+        "name": "Copy.ai",
+        "url": "https://www.copy.ai/",
+        "desc": "营销文案生成"
+      },
+      {
+        "id": "new_20094",
+        "name": "Jasper",
+        "url": "https://www.jasper.ai/",
+        "desc": "AI写作工具"
+      },
+      {
+        "id": "new_20095",
+        "name": "Grammarly",
+        "url": "https://www.grammarly.com/",
+        "desc": "语法检查助手"
+      },
+      {
+        "id": "new_20096",
+        "name": "v0.dev",
+        "url": "https://v0.dev/",
+        "desc": "AI生成前端"
+      },
+      {
+        "id": "new_20097",
+        "name": "GitHub Copilot",
+        "url": "https://github.com/features/copilot",
+        "desc": "AI编程助手"
+      },
+      {
+        "id": "new_20098",
+        "name": "CodeGeeX",
+        "url": "https://codegeex.cn/",
+        "desc": "AI编程助手"
+      },
+      {
+        "id": "new_20099",
+        "name": "Midjourney",
+        "url": "https://www.midjourney.com/",
+        "desc": "AI绘画工具"
+      },
+      {
+        "id": "new_20100",
+        "name": "即梦AI",
+        "url": "https://jimeng.jianying.com/",
+        "desc": "一站式AI创作"
+      },
+      {
+        "id": "new_20101",
+        "name": "Playground",
+        "url": "https://playground.com/",
+        "desc": "AI绘画创作"
+      },
+      {
+        "id": "new_20102",
+        "name": "Poe",
+        "url": "https://poe.com/",
+        "desc": "AI对话平台"
+      },
+      {
+        "id": "new_20103",
+        "name": "Perplexity",
+        "url": "https://www.perplexity.ai/",
+        "desc": "AI搜索引擎"
+      },
+      {
+        "id": "new_20104",
+        "name": "Tome",
+        "url": "https://tome.app/",
+        "desc": "AI演示工具"
+      },
+      {
+        "id": "new_20105",
+        "name": "Runway",
+        "url": "https://runwayml.com/",
+        "desc": "AI视频生成"
+      },
+      {
+        "id": "new_20106",
+        "name": "Pika",
+        "url": "https://pika.art/",
+        "desc": "AI视频生成"
+      },
+      {
+        "id": "new_20107",
+        "name": "remove.bg",
+        "url": "https://www.remove.bg/",
+        "desc": "在线抠图工具"
       }
     ],
     "网盘云储": [
@@ -2982,6 +3942,66 @@
         "name": "Google Drive",
         "url": "https://drive.google.com/",
         "desc": "15GB免费云盘"
+      },
+      {
+        "id": "new_20132",
+        "name": "iCloud",
+        "url": "https://www.icloud.com/",
+        "desc": "苹果云存储"
+      },
+      {
+        "id": "new_20133",
+        "name": "pCloud",
+        "url": "https://www.pcloud.com/",
+        "desc": "终身云存储"
+      },
+      {
+        "id": "new_20134",
+        "name": "Sync.com",
+        "url": "https://www.sync.com/",
+        "desc": "加密云存储"
+      },
+      {
+        "id": "new_20135",
+        "name": "Icedrive",
+        "url": "https://icedrive.net/",
+        "desc": "云存储服务"
+      },
+      {
+        "id": "new_20136",
+        "name": "Degoo",
+        "url": "https://degoo.com/",
+        "desc": "100GB免费云盘"
+      },
+      {
+        "id": "new_20137",
+        "name": "Yandex Disk",
+        "url": "https://disk.yandex.com/",
+        "desc": "俄罗斯云盘"
+      },
+      {
+        "id": "new_20138",
+        "name": "Naver网盘",
+        "url": "https://www.naver.com/",
+        "desc": "韩国云存储"
+      },
+      {
+        "id": "new_20139",
+        "name": "城通网盘",
+        "url": "https://www.ctfile.com/",
+        "desc": "国内网盘"
+      },
+      {
+        "id": "new_20140",
+        "name": "曲奇云盘",
+        "url": "https://www.quqi.com/",
+        "desc": "企业云盘"
+      },
+      {
+        "id": "new_20141",
+        "name": "亿方云",
+        "url": "https://www.fangcloud.com/",
+        "desc": "企业云盘"
       }
     ],
     "购物网站": [
@@ -3160,6 +4180,78 @@
         "name": "少数派",
         "url": "https://sspai.com/",
         "desc": "高效工作指南"
+      },
+      {
+        "id": "new_20120",
+        "name": "知乎",
+        "url": "https://www.zhihu.com/",
+        "desc": "中文问答社区"
+      },
+      {
+        "id": "new_20121",
+        "name": "豆瓣",
+        "url": "https://www.douban.com/",
+        "desc": "文化生活社区"
+      },
+      {
+        "id": "new_20122",
+        "name": "简书",
+        "url": "https://www.jianshu.com/",
+        "desc": "写作交流社区"
+      },
+      {
+        "id": "new_20123",
+        "name": "CSDN",
+        "url": "https://www.csdn.net/",
+        "desc": "开发者技术社区"
+      },
+      {
+        "id": "new_20124",
+        "name": "博客园",
+        "url": "https://www.cnblogs.com/",
+        "desc": "开发者博客"
+      },
+      {
+        "id": "new_20125",
+        "name": "SegmentFault",
+        "url": "https://segmentfault.com/",
+        "desc": "技术问答社区"
+      },
+      {
+        "id": "new_20126",
+        "name": "开源中国",
+        "url": "https://www.oschina.net/",
+        "desc": "开源技术社区"
+      },
+      {
+        "id": "new_20127",
+        "name": "InfoQ",
+        "url": "https://www.infoq.cn/",
+        "desc": "技术媒体平台"
+      },
+      {
+        "id": "new_20128",
+        "name": "36氪",
+        "url": "https://36kr.com/",
+        "desc": "科技创业媒体"
+      },
+      {
+        "id": "new_20129",
+        "name": "虎嗅",
+        "url": "https://www.huxiu.com/",
+        "desc": "商业资讯平台"
+      },
+      {
+        "id": "new_20130",
+        "name": "钛媒体",
+        "url": "https://www.tmtpost.com/",
+        "desc": "科技媒体"
+      },
+      {
+        "id": "new_20131",
+        "name": "爱范儿",
+        "url": "https://www.ifanr.com/",
+        "desc": "科技媒体"
       }
     ],
     "UED团队": [

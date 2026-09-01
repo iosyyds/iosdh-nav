@@ -42,7 +42,7 @@ export default function SiteCard({
     <a
       href={`/site/${encodeURIComponent(site.id)}/`}
       title={`查看「${site.name}」详情`}
-      className="group relative bg-white rounded-2xl shadow-sm border border-gray-100 text-center p-5 flex flex-col items-center gap-3 transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-xl hover:shadow-[#6366f1]/30 hover:border-[#6366f1]/30 overflow-hidden"
+      className="group relative bg-white rounded-xl md:rounded-2xl shadow-sm border border-gray-100 text-center p-3 md:p-5 flex flex-col items-center gap-2 md:gap-3 transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-xl hover:shadow-[#6366f1]/30 hover:border-[#6366f1]/30 overflow-hidden"
     >
       {/* subtle top accent on hover */}
       <span

@@ -7,6 +7,20 @@ import SiteCard from "@/components/SiteCard";
 import TopAd from "@/components/TopAd";
 import { loadSiteData, type SiteData } from "@/lib/dataLoader";
 
+// 分组主题色映射
+const GROUP_THEMES: Record<string, { gradient: string; glow: string; text: string }> = {
+  ios: { gradient: "from-[#6366f1] to-[#8b5cf6]", glow: "shadow-[#6366f1]/30", text: "text-[#6366f1]" },
+  "other-pan": { gradient: "from-[#06b6d4] to-[#0ea5e9]", glow: "shadow-[#06b6d4]/30", text: "text-[#06b6d4]" },
+  ai: { gradient: "from-[#ec4899] to-[#a855f7]", glow: "shadow-[#ec4899]/30", text: "text-[#ec4899]" },
+  cloud: { gradient: "from-[#10b981] to-[#14b8a6]", glow: "shadow-[#10b981]/30", text: "text-[#10b981]" },
+  shop: { gradient: "from-[#f59e0b] to-[#f97316]", glow: "shadow-[#f59e0b]/30", text: "text-[#f59e0b]" },
+  news: { gradient: "from-[#3b82f6] to-[#06b6d4]", glow: "shadow-[#3b82f6]/30", text: "text-[#3b82f6]" },
+  tools: { gradient: "from-[#8b5cf6] to-[#ec4899]", glow: "shadow-[#8b5cf6]/30", text: "text-[#8b5cf6]" },
+  assets: { gradient: "from-[#0ea5e9] to-[#6366f1]", glow: "shadow-[#0ea5e9]/30", text: "text-[#0ea5e9]" },
+  ued: { gradient: "from-[#ef4444] to-[#f59e0b]", glow: "shadow-[#ef4444]/30", text: "text-[#ef4444]" },
+};
+const DEFAULT_THEME = { gradient: "from-[#6366f1] to-[#8b5cf6]", glow: "shadow-[#6366f1]/30", text: "text-[#6366f1]" };
+
 // 每个分组默认展示的站点数，超过则折叠
 const DEFAULT_VISIBLE = 10;
 
@@ -15,6 +29,7 @@ export default function Home() {
   const [query, setQuery] = useState("");
   const [activeGroup, setActiveGroup] = useState<string>("all");
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const resultRef = useRef<HTMLDivElement>(null);
 
   // 加载云端数据
@@ -135,13 +150,58 @@ export default function Home() {
               管理后台
             </a>
           </nav>
-          <a
-            href="#all-groups"
-            className="rounded-xl font-semibold transition-all duration-300 bg-[#6366f1] text-white shadow-lg shadow-[#6366f1]/25 hover:scale-[1.02] hover:shadow-xl hover:shadow-[#6366f1]/30 active:scale-95 px-4 md:px-5 py-2 text-sm md:text-base"
-          >
-            开始浏览
-          </a>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden rounded-xl font-semibold transition-all duration-300 bg-white text-[#0f172a] border border-gray-200 p-2 hover:border-[#6366f1]/50 active:scale-95"
+              aria-label="菜单"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {mobileMenuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
+            <a
+              href="#all-groups"
+              className="rounded-xl font-semibold transition-all duration-300 bg-[#6366f1] text-white shadow-lg shadow-[#6366f1]/25 hover:scale-[1.02] hover:shadow-xl hover:shadow-[#6366f1]/30 active:scale-95 px-3 md:px-5 py-2 text-xs md:text-base"
+            >
+              开始浏览
+            </a>
+          </div>
         </div>
+        {/* 手机展开菜单 */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-gray-100 bg-white px-4 py-3 space-y-1">
+            <button
+              onClick={() => { scrollTo("featured"); setMobileMenuOpen(false); }}
+              className="block w-full text-left rounded-xl px-4 py-2.5 text-sm font-sans text-gray-600 hover:bg-gray-50 hover:text-[#6366f1] transition-colors"
+            >
+              热门网址
+            </button>
+            <button
+              onClick={() => { scrollTo("all-groups"); setMobileMenuOpen(false); }}
+              className="block w-full text-left rounded-xl px-4 py-2.5 text-sm font-sans text-gray-600 hover:bg-gray-50 hover:text-[#6366f1] transition-colors"
+            >
+              全部收录
+            </button>
+            <button
+              onClick={() => { scrollTo("footer"); setMobileMenuOpen(false); }}
+              className="block w-full text-left rounded-xl px-4 py-2.5 text-sm font-sans text-gray-600 hover:bg-gray-50 hover:text-[#6366f1] transition-colors"
+            >
+              关于本站
+            </button>
+            <a
+              href="/admin"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block w-full text-left rounded-xl px-4 py-2.5 text-sm font-semibold text-[#6366f1] hover:bg-[#6366f1]/5 transition-colors"
+            >
+              管理后台
+            </a>
+          </div>
+        )}
       </header>
 
       {/* Hero：中间对角线区域 = 核心价值主张（Z 点 3） */}
@@ -161,10 +221,10 @@ export default function Home() {
           <span className="inline-block bg-[#6366f1]/10 text-[#6366f1] border border-[#6366f1]/20 rounded-xl px-3 py-1 text-xs font-semibold mb-5">
             ✦ 专业 iOS 资源导航 · 持续更新
           </span>
-          <h1 className="font-bold tracking-tight text-4xl md:text-5xl lg:text-6xl">
+          <h1 className="font-bold tracking-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl">
             专业 iOS 资源导航站
           </h1>
-          <p className="font-sans text-base md:text-lg text-gray-600 max-w-2xl mx-auto mt-5 leading-relaxed">
+          <p className="font-sans text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto mt-4 md:mt-5 leading-relaxed">
             精选 {TOTAL} 个优质网站，覆盖 iOS 网盘、巨魔商店 IPA、快捷指令、
             签名工具、AI 工具与设计资源，一键直达。
           </p>
@@ -173,27 +233,27 @@ export default function Home() {
           </div>
 
           {/* stats row */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-10 max-w-2xl mx-auto">
-            <div className="bg-gray-50 rounded-2xl border border-gray-100 p-4 text-center">
-              <div className="font-bold tracking-tight text-2xl md:text-3xl text-[#6366f1]">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 mt-8 md:mt-10 max-w-2xl mx-auto">
+            <div className="bg-gray-50 rounded-2xl border border-gray-100 p-3 md:p-4 text-center">
+              <div className="font-bold tracking-tight text-xl md:text-2xl lg:text-3xl text-[#6366f1]">
                 {TOTAL}
               </div>
               <div className="font-sans text-xs text-gray-400 mt-1">收录站点</div>
             </div>
-            <div className="bg-gray-50 rounded-2xl border border-gray-100 p-4 text-center">
-              <div className="font-bold tracking-tight text-2xl md:text-3xl text-[#06b6d4]">
+            <div className="bg-gray-50 rounded-2xl border border-gray-100 p-3 md:p-4 text-center">
+              <div className="font-bold tracking-tight text-xl md:text-2xl lg:text-3xl text-[#06b6d4]">
                 {totalCats}
               </div>
               <div className="font-sans text-xs text-gray-400 mt-1">细分分类</div>
             </div>
-            <div className="bg-gray-50 rounded-2xl border border-gray-100 p-4 text-center">
-              <div className="font-bold tracking-tight text-2xl md:text-3xl text-[#f59e0b]">
+            <div className="bg-gray-50 rounded-2xl border border-gray-100 p-3 md:p-4 text-center">
+              <div className="font-bold tracking-tight text-xl md:text-2xl lg:text-3xl text-[#f59e0b]">
                 {navGroups.length}
               </div>
               <div className="font-sans text-xs text-gray-400 mt-1">大板块</div>
             </div>
-            <div className="bg-gray-50 rounded-2xl border border-gray-100 p-4 text-center">
-              <div className="font-bold tracking-tight text-2xl md:text-3xl text-[#10b981]">
+            <div className="bg-gray-50 rounded-2xl border border-gray-100 p-3 md:p-4 text-center">
+              <div className="font-bold tracking-tight text-xl md:text-2xl lg:text-3xl text-[#10b981]">
                 24h
               </div>
               <div className="font-sans text-xs text-gray-400 mt-1">免费开放</div>
@@ -203,9 +263,9 @@ export default function Home() {
       </section>
 
       {/* 分类筛选：快速定位 */}
-      <section className="bg-gray-50 text-[#0f172a] py-8 px-4 md:px-6 lg:px-8 border-y border-gray-100">
+      <section className="bg-gray-50 text-[#0f172a] py-6 md:py-8 px-4 md:px-6 lg:px-8 border-y border-gray-100">
         <div className="max-w-6xl mx-auto">
-          <div className="flex flex-wrap items-center justify-center gap-3">
+          <div className="flex md:flex-wrap items-center justify-start md:justify-center gap-2 md:gap-3 overflow-x-auto pb-2 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0 scrollbar-hide">
             <button
               onClick={() => setActiveGroup("all")}
               className={`rounded-xl font-semibold transition-all duration-300 px-4 py-2 text-sm active:scale-95 ${
@@ -254,24 +314,34 @@ export default function Home() {
             </div>
           )}
           {filtered.map(({ group, sites }) => {
+            const theme = GROUP_THEMES[group.id] || DEFAULT_THEME;
             const isExpanded = !!expanded[group.id] || !!q;
             const visibleSites = isExpanded ? sites : sites.slice(0, DEFAULT_VISIBLE);
             const hiddenCount = sites.length - DEFAULT_VISIBLE;
             return (
               <div key={group.id} id={`group-${group.id}`} className="scroll-mt-20">
-                <div className="flex items-center justify-between gap-4 mb-6 md:mb-8">
-                  <div>
-                    <h2 className="font-bold tracking-tight text-2xl md:text-3xl flex items-center gap-2">
-                      <span>{group.icon}</span>
-                      {group.name}
-                    </h2>
-                    <p className="font-sans text-sm text-gray-400 mt-1">{group.desc}</p>
+                <div className="flex items-center justify-between gap-2 md:gap-4 mb-4 md:mb-8">
+                  <div className="flex items-center gap-2 md:gap-4 min-w-0">
+                    {/* 渐变图标容器 */}
+                    <div className={`h-11 w-11 md:h-16 md:w-16 rounded-xl md:rounded-2xl bg-gradient-to-br ${theme.gradient} flex items-center justify-center text-lg md:text-3xl shadow-lg ${theme.glow} shrink-0`}>
+                      {group.icon}
+                    </div>
+                    <div className="min-w-0">
+                      <h2 className="font-bold tracking-tight text-lg md:text-3xl text-[#0f172a] truncate">
+                        {group.name}
+                      </h2>
+                      <p className="font-sans text-xs md:text-sm text-gray-400 mt-0.5 md:mt-1 truncate">{group.desc}</p>
+                    </div>
                   </div>
-                  <span className="font-sans text-xs text-gray-400 bg-white border border-gray-200 rounded-xl px-3 py-1.5 shrink-0">
-                    {sites.length} 个站点
-                  </span>
+                  {/* 站点数徽章 */}
+                  <div className={`bg-gradient-to-r ${theme.gradient} text-white rounded-lg md:rounded-xl px-2.5 md:px-4 py-1.5 md:py-2 shadow-lg ${theme.glow} shrink-0`}>
+                    <span className="font-bold text-sm md:text-lg">{sites.length}</span>
+                    <span className="font-sans text-[10px] md:text-xs ml-0.5 md:ml-1 opacity-90">个站点</span>
+                  </div>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
+                {/* 分组装饰线 */}
+                <div className={`h-1 w-12 md:w-16 rounded-full bg-gradient-to-r ${theme.gradient} mb-4 md:mb-8`} />
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 md:gap-3 lg:gap-4">
                   {visibleSites.map(({ site, cat }) => (
                     <SiteCard key={site.id} site={site} category={cat} />
                   ))}
