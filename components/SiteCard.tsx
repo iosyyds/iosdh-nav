@@ -27,7 +27,13 @@ function colorOf(id: string): string {
   return PALETTE[h % PALETTE.length];
 }
 
-export default function SiteCard({ site }: { site: Site }) {
+export default function SiteCard({
+  site,
+  category,
+}: {
+  site: Site;
+  category?: string;
+}) {
   const [failed, setFailed] = useState(false);
   const icon =
     site.icon && site.icon.startsWith("http") ? site.icon : faviconUrl(site.url);
@@ -38,8 +44,14 @@ export default function SiteCard({ site }: { site: Site }) {
       target="_blank"
       rel="noopener noreferrer"
       title={site.url}
-      className="group bg-white rounded-2xl shadow-sm border border-gray-100 text-center p-6 md:p-8 flex flex-col items-center gap-3 transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-xl hover:shadow-[#6366f1]/30 hover:border-[#6366f1]/30"
+      className="group relative bg-white rounded-2xl shadow-sm border border-gray-100 text-center p-5 flex flex-col items-center gap-3 transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-xl hover:shadow-[#6366f1]/30 hover:border-[#6366f1]/30 overflow-hidden"
     >
+      {/* subtle top accent on hover */}
+      <span
+        className="absolute inset-x-0 top-0 h-0.5 bg-[#6366f1] opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+        aria-hidden="true"
+      />
+
       <span className="relative h-12 w-12 md:h-14 md:w-14 rounded-xl overflow-hidden bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0">
         {!failed && icon ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -61,15 +73,21 @@ export default function SiteCard({ site }: { site: Site }) {
           </span>
         )}
       </span>
-      <span className="w-full">
-        <span className="block font-bold tracking-tight text-base md:text-lg text-[#0f172a] group-hover:text-[#6366f1] transition-colors duration-200">
+      <span className="w-full flex flex-col items-center">
+        <span className="block w-full font-bold tracking-tight text-sm md:text-base text-[#0f172a] group-hover:text-[#6366f1] transition-colors duration-200 truncate">
           {site.name}
         </span>
-        {site.desc ? (
-          <span className="block font-sans text-xs md:text-sm text-gray-400 mt-1.5 leading-relaxed line-clamp-2">
-            {site.desc}
+        {/* 描述区：始终占位，统一高度，长描述截断为一行 */}
+        <span className="block w-full font-sans text-xs text-gray-400 mt-1.5 leading-relaxed truncate min-h-[1.25rem]">
+          {site.desc || "\u00A0"}
+        </span>
+        {category ? (
+          <span className="inline-block font-sans text-[11px] text-gray-400 bg-gray-50 border border-gray-100 rounded-lg px-2 py-0.5 mt-2 group-hover:border-[#6366f1]/30 group-hover:text-[#6366f1] transition-colors duration-200">
+            {category}
           </span>
-        ) : null}
+        ) : (
+          <span className="mt-2 h-[1.25rem]" aria-hidden="true" />
+        )}
       </span>
     </a>
   );
