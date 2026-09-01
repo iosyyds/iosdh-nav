@@ -589,6 +589,27 @@ export default function AdminPage() {
         <main className="space-y-6">
           {view === "sites" && data && (
             <>
+              {/* 空数据提示 */}
+              {Object.values(data.categories).reduce((n, a) => n + a.length, 0) === 0 && (
+                <div className="bg-[#f59e0b]/10 border border-[#f59e0b]/30 rounded-2xl p-5 mb-4">
+                  <div className="flex items-start gap-3">
+                    <span className="text-2xl">⚠️</span>
+                    <div className="flex-1">
+                      <h3 className="font-bold tracking-tight text-base text-[#0f172a]">云端数据为空</h3>
+                      <p className="font-sans text-sm text-gray-600 mt-1">
+                        当前 jsonbin 云端还没有站点数据。点击下方按钮，将本地默认的 521 个站点（26 个分类）上传到云端，前台和后台即可正常显示。
+                      </p>
+                      <button
+                        onClick={handleResetToDefault}
+                        disabled={submitting}
+                        className="mt-3 rounded-xl font-semibold transition-all duration-300 bg-[#f59e0b] text-white shadow-lg shadow-[#f59e0b]/25 hover:scale-[1.02] hover:shadow-xl hover:shadow-[#f59e0b]/30 active:scale-95 px-5 py-2.5 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {submitting ? "正在恢复…" : "🚀 一键恢复 521 个站点到云端"}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
               {/* 分类选择 */}
               <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 md:p-6">
                 <div className="flex flex-wrap gap-2">
