@@ -1,10 +1,17 @@
 "use client";
-
 import { useEffect, useMemo, useState } from "react";
 import { loadSiteData, type SiteData } from "@/lib/dataLoader";
 import type { Site } from "@/lib/sites";
 import AnimatedLogo from "@/components/AnimatedLogo";
-
+// 获取网站 favicon（百度服务，国内稳定）
+function faviconUrl(url: string): string {
+  try {
+    const u = new URL(url);
+    return `https://favicon.baidu.com/${u.hostname}`;
+  } catch {
+    return "";
+  }
+}
 const GRADIENTS = [
   "from-[#6366f1] to-[#8b5cf6]",
   "from-[#06b6d4] to-[#0ea5e9]",
@@ -15,21 +22,17 @@ const GRADIENTS = [
   "from-[#ef4444] to-[#f59e0b]",
   "from-[#8b5cf6] to-[#ec4899]",
 ];
-
 function gradientOf(id: string): string {
   let h = 0;
   for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
   return GRADIENTS[h % GRADIENTS.length];
 }
-
 export default function SiteDetail({ id }: { id: string }) {
   const [data, setData] = useState<SiteData | null>(null);
   const [iconFailed, setIconFailed] = useState(false);
-
   useEffect(() => {
     loadSiteData().then(setData);
   }, []);
-
   const { site, category } = useMemo(() => {
     if (!data) return { site: null as Site | null, category: "" };
     for (const [cat, sites] of Object.entries(data.categories)) {
@@ -38,7 +41,6 @@ export default function SiteDetail({ id }: { id: string }) {
     }
     return { site: null as Site | null, category: "" };
   }, [data, id]);
-
   if (!data) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -49,7 +51,6 @@ export default function SiteDetail({ id }: { id: string }) {
       </div>
     );
   }
-
   if (!site) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
@@ -73,9 +74,11 @@ export default function SiteDetail({ id }: { id: string }) {
       </div>
     );
   }
-
-  const hasCustomIcon = !!(site.icon && site.icon.startsWith("http"));
-  const showDefault = iconFailed || !hasCustomIcon;
+  // 优先用站点自带图标，否则用 favicon 服务
+  const iconUrl = site.icon && site.icon.startsWith("http")
+    ? site.icon
+    : faviconUrl(site.url);
+  const showDefault = iconFailed || !iconUrl;
   const domain = (() => {
     try {
       return new URL(site.url).hostname;
@@ -83,7 +86,6 @@ export default function SiteDetail({ id }: { id: string }) {
       return site.url;
     }
   })();
-
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* 顶部导航 */}
@@ -100,13 +102,12 @@ export default function SiteDetail({ id }: { id: string }) {
           </a>
         </div>
       </header>
-
       {/* 详情内容 */}
       <main className="flex-1 flex items-center justify-center px-4 md:px-6 py-12 md:py-20">
         <div className="w-full max-w-2xl">
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-12 text-center">
             {/* 图标 */}
-            <div className={`relative h-20 w-20 md:h-24 md:w-24 rounded-2xl overflow-hidden bg-gradient-to-br ${gradientOf(site.id)} flex items-center justify-center mx-auto shrink-0 shadow-lg`}>
+            <div className={`relative h-20 w-20 md:h-24 md:w-24 rounded-2xl overflow-hidden ${showDefault ? `bg-gradient-to-br ${gradientOf(site.id)}` : "bg-white"} flex items-center justify-center mx-auto shrink-0 shadow-lg`}>
               {showDefault ? (
                 <span className="font-bold tracking-tight text-3xl md:text-4xl text-white select-none">
                   甜
@@ -114,7 +115,7 @@ export default function SiteDetail({ id }: { id: string }) {
               ) : (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
-                  src={site.icon}
+                  src={iconUrl}
                   alt={site.name}
                   width={96}
                   height={96}
@@ -123,12 +124,10 @@ export default function SiteDetail({ id }: { id: string }) {
                 />
               )}
             </div>
-
             {/* 名称 */}
             <h1 className="font-bold tracking-tight text-2xl md:text-3xl text-[#0f172a] mt-6">
               {site.name}
             </h1>
-
             {/* 分类标签 */}
             {category && (
               <div className="mt-3">
@@ -137,14 +136,12 @@ export default function SiteDetail({ id }: { id: string }) {
                 </span>
               </div>
             )}
-
             {/* 描述 */}
             {site.desc && (
               <p className="font-sans text-base text-gray-600 mt-4 leading-relaxed max-w-md mx-auto">
                 {site.desc}
               </p>
             )}
-
             {/* 网址 */}
             <div className="mt-6 bg-gray-50 rounded-xl border border-gray-100 px-4 py-3 inline-block max-w-full">
               <span className="font-sans text-sm text-gray-400">网址：</span>
@@ -152,7 +149,6 @@ export default function SiteDetail({ id }: { id: string }) {
                 {site.url}
               </span>
             </div>
-
             {/* CTA */}
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
               <a
@@ -171,14 +167,12 @@ export default function SiteDetail({ id }: { id: string }) {
               </a>
             </div>
           </div>
-
           {/* 底部信息 */}
           <div className="text-center mt-6 font-sans text-xs text-gray-400">
             域名：{domain} · 由甜甜导航收录整理
           </div>
         </div>
       </main>
-
       {/* 页脚 */}
       <footer className="bg-white border-t border-gray-100 py-6 px-4">
         <div className="max-w-4xl mx-auto text-center font-sans text-xs text-gray-400">
