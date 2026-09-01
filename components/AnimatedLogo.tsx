@@ -1,7 +1,5 @@
 "use client";
-
 import { useState } from "react";
-
 /**
  * 炫酷动画 Logo 组件
  * - 渐变流动背景
@@ -17,13 +15,11 @@ export default function AnimatedLogo({
   showText?: boolean;
 }) {
   const [hovered, setHovered] = useState(false);
-
   const sizeMap = {
     sm: "h-8 w-8 text-sm",
     md: "h-9 w-9 text-lg",
     lg: "h-14 w-14 text-2xl",
   };
-
   return (
     <div
       className="flex items-center gap-2.5 group cursor-pointer"
@@ -68,7 +64,6 @@ export default function AnimatedLogo({
           <span className="relative z-10 select-none drop-shadow-lg">甜</span>
         </div>
       </div>
-
       {/* Logo 文字 */}
       {showText && (
         <span
@@ -79,7 +74,6 @@ export default function AnimatedLogo({
           甜甜导航
         </span>
       )}
-
       {/* 内联动画样式 */}
       <style jsx>{`
         @keyframes gradientShift {

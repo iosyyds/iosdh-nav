@@ -20,6 +20,7 @@ const GROUP_THEMES: Record<string, { gradient: string; glow: string; text: strin
   assets: { gradient: "from-[#0ea5e9] to-[#6366f1]", glow: "shadow-[#0ea5e9]/30", text: "text-[#0ea5e9]" },
   ued: { gradient: "from-[#ef4444] to-[#f59e0b]", glow: "shadow-[#ef4444]/30", text: "text-[#ef4444]" },
 };
+
 const DEFAULT_THEME = { gradient: "from-[#6366f1] to-[#8b5cf6]", glow: "shadow-[#6366f1]/30", text: "text-[#6366f1]" };
 
 // 每个分组默认展示的站点数，超过则折叠
@@ -45,7 +46,6 @@ export default function Home() {
     [categories]
   );
   const totalCats = Object.keys(categories).length;
-
   const q = query.trim().toLowerCase();
 
   const filtered: { group: NavGroup; sites: { site: Site; cat: string }[] }[] =
@@ -227,7 +227,6 @@ export default function Home() {
           <div className="mt-8">
             <SearchBox onSearch={handleSearch} />
           </div>
-
           {/* stats row */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 mt-8 md:mt-10 max-w-2xl mx-auto">
             <div className="bg-gray-50 rounded-2xl border border-gray-100 p-3 md:p-4 text-center">
