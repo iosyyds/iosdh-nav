@@ -5,6 +5,16 @@ import { loadSiteData, type SiteData } from "@/lib/dataLoader";
 import type { Site } from "@/lib/sites";
 import AnimatedLogo from "@/components/AnimatedLogo";
 
+// 获取网站 favicon（百度服务，国内稳定）
+function faviconUrl(url: string): string {
+  try {
+    const u = new URL(url);
+    return `https://favicon.baidu.com/${u.hostname}`;
+  } catch {
+    return "";
+  }
+}
+
 const GRADIENTS = [
   "from-[#6366f1] to-[#8b5cf6]",
   "from-[#06b6d4] to-[#0ea5e9]",
@@ -74,8 +84,11 @@ export default function SiteDetail({ id }: { id: string }) {
     );
   }
 
-  const hasCustomIcon = !!(site.icon && site.icon.startsWith("http"));
-  const showDefault = iconFailed || !hasCustomIcon;
+  // 优先用站点自带图标，否则用 favicon 服务
+  const iconUrl = site.icon && site.icon.startsWith("http")
+    ? site.icon
+    : faviconUrl(site.url);
+  const showDefault = iconFailed || !iconUrl;
   const domain = (() => {
     try {
       return new URL(site.url).hostname;
@@ -106,7 +119,7 @@ export default function SiteDetail({ id }: { id: string }) {
         <div className="w-full max-w-2xl">
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-12 text-center">
             {/* 图标 */}
-            <div className={`relative h-20 w-20 md:h-24 md:w-24 rounded-2xl overflow-hidden bg-gradient-to-br ${gradientOf(site.id)} flex items-center justify-center mx-auto shrink-0 shadow-lg`}>
+            <div className={`relative h-20 w-20 md:h-24 md:w-24 rounded-2xl overflow-hidden ${showDefault ? `bg-gradient-to-br ${gradientOf(site.id)}` : "bg-white"} flex items-center justify-center mx-auto shrink-0 shadow-lg`}>
               {showDefault ? (
                 <span className="font-bold tracking-tight text-3xl md:text-4xl text-white select-none">
                   甜
@@ -114,7 +127,7 @@ export default function SiteDetail({ id }: { id: string }) {
               ) : (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
-                  src={site.icon}
+                  src={iconUrl}
                   alt={site.name}
                   width={96}
                   height={96}

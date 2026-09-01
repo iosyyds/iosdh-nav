@@ -41,7 +41,9 @@ export async function loadSiteData(): Promise<SiteData> {
       const raw = localStorage.getItem(LOCAL_KEY);
       if (raw) {
         const parsed = JSON.parse(raw);
-        if (parsed && parsed.categories && parsed.navGroups) {
+        const hasSites = parsed && parsed.categories && Object.keys(parsed.categories).length > 0 &&
+          Object.values(parsed.categories).some((arr: any) => arr && arr.length > 0);
+        if (parsed && parsed.navGroups && parsed.navGroups.length > 0 && hasSites) {
           return parsed as SiteData;
         }
       }
@@ -55,7 +57,10 @@ export async function loadSiteData(): Promise<SiteData> {
   if (config && config.binId) {
     try {
       const data = (await readBin(config)) as SiteData;
-      if (data && data.categories && data.navGroups) {
+      // 检查数据有效性：必须有分组和至少一个分类有站点
+      const hasSites = data && data.categories && Object.keys(data.categories).length > 0 &&
+        Object.values(data.categories).some(arr => arr && arr.length > 0);
+      if (data && data.navGroups && data.navGroups.length > 0 && hasSites) {
         // 缓存到 localStorage 作为离线兜底
         if (typeof window !== "undefined") {
           try {
@@ -79,7 +84,9 @@ export async function loadSiteData(): Promise<SiteData> {
     });
     if (res.ok) {
       const data = (await res.json()) as SiteData;
-      if (data && data.categories && data.navGroups) {
+      const hasSites = data && data.categories && Object.keys(data.categories).length > 0 &&
+        Object.values(data.categories).some(arr => arr && arr.length > 0);
+      if (data && data.navGroups && data.navGroups.length > 0 && hasSites) {
         if (typeof window !== "undefined") {
           try {
             localStorage.setItem(CACHE_KEY, JSON.stringify(data));
@@ -100,7 +107,9 @@ export async function loadSiteData(): Promise<SiteData> {
       const raw = localStorage.getItem(CACHE_KEY);
       if (raw) {
         const parsed = JSON.parse(raw);
-        if (parsed && parsed.categories && parsed.navGroups) {
+        const hasSites = parsed && parsed.categories && Object.keys(parsed.categories).length > 0 &&
+          Object.values(parsed.categories).some((arr: any) => arr && arr.length > 0);
+        if (parsed && parsed.navGroups && parsed.navGroups.length > 0 && hasSites) {
           return parsed as SiteData;
         }
       }

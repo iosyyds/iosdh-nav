@@ -20,6 +20,16 @@ function gradientOf(id: string): string {
   return GRADIENTS[h % GRADIENTS.length];
 }
 
+// 获取网站 favicon（百度服务，国内稳定）
+function faviconUrl(url: string): string {
+  try {
+    const u = new URL(url);
+    return `https://favicon.baidu.com/${u.hostname}`;
+  } catch {
+    return "";
+  }
+}
+
 export default function SiteCard({
   site,
   category,
@@ -28,9 +38,11 @@ export default function SiteCard({
   category?: string;
 }) {
   const [failed, setFailed] = useState(false);
-  // 只有站点自带 http 图标时才尝试加载，否则用默认"甜"字 logo
-  const hasCustomIcon = !!(site.icon && site.icon.startsWith("http"));
-  const showDefault = failed || !hasCustomIcon;
+  // 优先用站点自带图标，否则用 favicon 服务
+  const iconUrl = site.icon && site.icon.startsWith("http")
+    ? site.icon
+    : faviconUrl(site.url);
+  const showDefault = failed || !iconUrl;
 
   return (
     <a
@@ -43,7 +55,7 @@ export default function SiteCard({
         className="absolute inset-x-0 top-0 h-0.5 bg-[#6366f1] opacity-0 group-hover:opacity-100 transition-opacity duration-200"
         aria-hidden="true"
       />
-      <span className={`relative h-12 w-12 md:h-14 md:w-14 rounded-xl overflow-hidden bg-gradient-to-br ${gradientOf(site.id)} flex items-center justify-center shrink-0 shadow-md`}>
+      <span className={`relative h-12 w-12 md:h-14 md:w-14 rounded-xl overflow-hidden ${showDefault ? `bg-gradient-to-br ${gradientOf(site.id)}` : "bg-white"} flex items-center justify-center shrink-0 shadow-md`}>
         {showDefault ? (
           <span className="font-bold tracking-tight text-lg md:text-xl text-white select-none">
             甜
@@ -51,7 +63,7 @@ export default function SiteCard({
         ) : (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={site.icon}
+            src={iconUrl}
             alt=""
             loading="lazy"
             width={48}
