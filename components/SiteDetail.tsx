@@ -3,22 +3,23 @@
 import { useEffect, useMemo, useState } from "react";
 import { loadSiteData, type SiteData } from "@/lib/dataLoader";
 import type { Site } from "@/lib/sites";
+import AnimatedLogo from "@/components/AnimatedLogo";
 
-function faviconUrl(url: string): string {
-  try {
-    const u = new URL(url);
-    return `https://t0.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=${encodeURIComponent(u.origin)}`;
-  } catch {
-    return "";
-  }
-}
+const GRADIENTS = [
+  "from-[#6366f1] to-[#8b5cf6]",
+  "from-[#06b6d4] to-[#0ea5e9]",
+  "from-[#f59e0b] to-[#f97316]",
+  "from-[#ec4899] to-[#a855f7]",
+  "from-[#10b981] to-[#14b8a6]",
+  "from-[#3b82f6] to-[#6366f1]",
+  "from-[#ef4444] to-[#f59e0b]",
+  "from-[#8b5cf6] to-[#ec4899]",
+];
 
-const PALETTE = ["#6366f1", "#06b6d4", "#f59e0b", "#ec4899", "#10b981"];
-
-function colorOf(id: string): string {
+function gradientOf(id: string): string {
   let h = 0;
   for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
-  return PALETTE[h % PALETTE.length];
+  return GRADIENTS[h % GRADIENTS.length];
 }
 
 export default function SiteDetail({ id }: { id: string }) {
@@ -73,7 +74,8 @@ export default function SiteDetail({ id }: { id: string }) {
     );
   }
 
-  const icon = site.icon && site.icon.startsWith("http") ? site.icon : faviconUrl(site.url);
+  const hasCustomIcon = !!(site.icon && site.icon.startsWith("http"));
+  const showDefault = iconFailed || !hasCustomIcon;
   const domain = (() => {
     try {
       return new URL(site.url).hostname;
@@ -87,13 +89,8 @@ export default function SiteDetail({ id }: { id: string }) {
       {/* 顶部导航 */}
       <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border border-gray-200 px-4 md:px-6 lg:px-8">
         <div className="flex items-center justify-between max-w-4xl mx-auto gap-4 h-16">
-          <a href="/" className="flex items-center gap-2.5 group">
-            <span className="h-9 w-9 rounded-xl bg-[#6366f1] text-white flex items-center justify-center font-bold tracking-tight text-lg shadow-lg shadow-[#6366f1]/25 transition-all duration-200 ease-out group-hover:scale-[1.02]">
-              甜
-            </span>
-            <span className="font-bold tracking-tight text-lg md:text-xl text-[#0f172a]">
-              甜甜导航
-            </span>
+          <a href="/" className="flex items-center gap-2.5">
+            <AnimatedLogo size="md" />
           </a>
           <a
             href="/"
@@ -109,24 +106,21 @@ export default function SiteDetail({ id }: { id: string }) {
         <div className="w-full max-w-2xl">
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-12 text-center">
             {/* 图标 */}
-            <div className="relative h-20 w-20 md:h-24 md:w-24 rounded-2xl overflow-hidden bg-gray-50 border border-gray-100 flex items-center justify-center mx-auto shrink-0 shadow-lg shadow-[#6366f1]/10">
-              {!iconFailed && icon ? (
+            <div className={`relative h-20 w-20 md:h-24 md:w-24 rounded-2xl overflow-hidden bg-gradient-to-br ${gradientOf(site.id)} flex items-center justify-center mx-auto shrink-0 shadow-lg`}>
+              {showDefault ? (
+                <span className="font-bold tracking-tight text-3xl md:text-4xl text-white select-none">
+                  甜
+                </span>
+              ) : (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
-                  src={icon}
+                  src={site.icon}
                   alt={site.name}
                   width={96}
                   height={96}
                   className="h-full w-full object-cover"
                   onError={() => setIconFailed(true)}
                 />
-              ) : (
-                <span
-                  className="h-full w-full flex items-center justify-center font-bold tracking-tight text-3xl md:text-4xl text-white"
-                  style={{ backgroundColor: colorOf(site.id) }}
-                >
-                  {site.name.trim().charAt(0).toUpperCase()}
-                </span>
               )}
             </div>
 

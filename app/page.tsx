@@ -5,6 +5,7 @@ import { type NavGroup, type Site } from "@/lib/sites";
 import SearchBox from "@/components/SearchBox";
 import SiteCard from "@/components/SiteCard";
 import TopAd from "@/components/TopAd";
+import AnimatedLogo from "@/components/AnimatedLogo";
 import { loadSiteData, type SiteData } from "@/lib/dataLoader";
 
 // 分组主题色映射
@@ -113,13 +114,8 @@ export default function Home() {
       {/* 顶部导航：左上 Logo，右上 导航 + 首要 CTA（Z 点 1/2） */}
       <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border border-gray-200 px-4 md:px-6 lg:px-8">
         <div className="flex items-center justify-between max-w-6xl mx-auto gap-4 md:gap-6 h-16">
-          <a href="#" className="flex items-center gap-2.5 group">
-            <span className="h-9 w-9 rounded-xl bg-[#6366f1] text-white flex items-center justify-center font-bold tracking-tight text-lg shadow-lg shadow-[#6366f1]/25 transition-all duration-200 ease-out group-hover:scale-[1.02]">
-              甜
-            </span>
-            <span className="font-bold tracking-tight text-lg md:text-xl text-[#0f172a]">
-              甜甜导航
-            </span>
+          <a href="#" className="flex items-center gap-2.5">
+            <AnimatedLogo size="md" />
           </a>
           <nav
             className="hidden md:flex items-center gap-6 font-sans text-sm text-gray-600"
