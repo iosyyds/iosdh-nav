@@ -247,6 +247,39 @@ export default function AdminPage() {
     notify("已从云端重新加载数据");
   };
 
+  // 用本地默认数据重置云端（修复空 Bin 问题）
+  const handleResetToDefault = async () => {
+    if (!window.confirm("确定要用默认的 400 个站点数据覆盖云端？当前云端数据将被替换。")) return;
+    const config = loadJsonbinConfig();
+    if (!config) {
+      notify("未配置 jsonbin，请重新登录", "error");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const basePath = (process.env.NEXT_PUBLIC_BASE_PATH as string) || "";
+      const res = await fetch(`${basePath}/data/sites.json?t=${Date.now()}`, { cache: "no-store" });
+      if (!res.ok) {
+        notify(`加载默认数据失败（HTTP ${res.status}）`, "error");
+        return;
+      }
+      const defaultData = await res.json();
+      const result = await updateBin(config, defaultData);
+      if (result.success) {
+        clearLocalData();
+        setData(defaultData);
+        const count = Object.values(defaultData.categories).reduce((n: number, a: any) => n + a.length, 0);
+        notify(`已重置云端，恢复 ${count} 个站点`);
+      } else {
+        notify(result.message, "error");
+      }
+    } catch (e) {
+      notify(`重置失败：${e instanceof Error ? e.message : String(e)}`, "error");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   // 广告位
   const saveAd = (ad: AdConfig) => {
     const next = ads.map((a) => (a.id === ad.id ? ad : a));
@@ -768,6 +801,13 @@ export default function AdminPage() {
                     className="rounded-xl font-semibold transition-all duration-300 bg-white text-[#0f172a] border border-gray-200 hover:border-[#6366f1]/40 px-6 py-3 text-sm active:scale-95"
                   >
                     💾 导出 JSON 备份
+                  </button>
+                  <button
+                    onClick={handleResetToDefault}
+                    disabled={submitting}
+                    className="rounded-xl font-semibold transition-all duration-300 bg-white text-[#f59e0b] border border-[#f59e0b]/30 hover:border-[#f59e0b]/60 hover:bg-[#f59e0b]/5 px-6 py-3 text-sm active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    🔄 恢复默认数据到云端
                   </button>
                 </div>
               </div>
