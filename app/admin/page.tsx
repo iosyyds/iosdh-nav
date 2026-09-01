@@ -44,6 +44,8 @@ export default function AdminPage() {
   const [binId, setBinId] = useState("");
   const [loginError, setLoginError] = useState("");
   const [creating, setCreating] = useState(false);
+  const [showConfig, setShowConfig] = useState(false); // 是否显示完整配置表单（已有配置时默认隐藏）
+  const savedConfig = typeof window !== "undefined" ? loadJsonbinConfig() : null;
 
   // 编辑状态
   const [editing, setEditing] = useState<Site | null>(null);
@@ -81,6 +83,13 @@ export default function AdminPage() {
       setLoginError("管理密码错误");
       return;
     }
+    // 如果已有保存的配置，直接用，不需要再输 API Key
+    const saved = loadJsonbinConfig();
+    if (saved && saved.binId && saved.apiKey && !showConfig) {
+      finishLogin(saved);
+      return;
+    }
+    // 完整配置模式：需要 API Key 和 Bin ID
     if (!apiKey.trim()) {
       setLoginError("请输入 jsonbin API Key");
       return;
@@ -338,6 +347,48 @@ export default function AdminPage() {
           </div>
 
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 space-y-4">
+            {/* 已有配置且未展开配置：只输密码 */}
+            {savedConfig && !showConfig ? (
+              <>
+                <div className="bg-green-50 border border-green-200 rounded-xl p-3">
+                  <p className="font-sans text-xs text-green-700">
+                    ✓ 云端已配置（Bin: {savedConfig.binId.slice(0, 8)}...），输入密码即可登录
+                  </p>
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-500 mb-1.5">管理密码</label>
+                  <input
+                    type="password"
+                    value={loginPwd}
+                    onChange={(e) => setLoginPwd(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleLogin()}
+                    placeholder="请输入管理密码"
+                    autoFocus
+                    className="w-full bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#6366f1]/20 focus:border-[#6366f1] transition-all px-4 py-2.5 text-sm"
+                  />
+                </div>
+                {loginError && (
+                  <div className="bg-red-50 border border-red-200 text-red-600 rounded-xl px-4 py-2.5 text-sm">
+                    {loginError}
+                  </div>
+                )}
+                <button
+                  onClick={handleLogin}
+                  className="w-full rounded-xl font-semibold transition-all duration-300 bg-[#6366f1] text-white shadow-lg shadow-[#6366f1]/25 hover:scale-[1.01] hover:shadow-xl hover:shadow-[#6366f1]/30 active:scale-95 px-6 py-3 text-sm"
+                >
+                  登录后台
+                </button>
+                <div className="text-center">
+                  <button
+                    onClick={() => { setShowConfig(true); setLoginError(""); }}
+                    className="font-sans text-xs text-gray-400 hover:text-[#6366f1] transition-colors"
+                  >
+                    换个 API Key / 重新配置云端 →
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
             {/* 步骤切换 */}
             <div className="flex gap-2 bg-gray-50 rounded-xl p-1">
               <button
@@ -411,8 +462,8 @@ export default function AdminPage() {
                 <p className="font-sans text-xs text-gray-600 leading-relaxed">
                   <strong className="text-[#6366f1]">首次使用说明：</strong>
                   点击下方按钮将自动在你的 jsonbin 账号中创建一个新的 Bin，
-                  并把当前 400 个站点数据作为初始内容上传。
-                  创建成功后会自动登录，Bin ID 会保存在本地浏览器。
+                  并把当前站点数据作为初始内容上传。
+                  创建成功后会自动登录，以后只输密码即可。
                 </p>
               </div>
             )}
@@ -438,6 +489,18 @@ export default function AdminPage() {
               >
                 {creating ? "正在创建 Bin…" : "创建 Bin 并登录"}
               </button>
+            )}
+            {savedConfig && showConfig && (
+              <div className="text-center">
+                <button
+                  onClick={() => { setShowConfig(false); setLoginError(""); }}
+                  className="font-sans text-xs text-gray-400 hover:text-[#6366f1] transition-colors"
+                >
+                  ← 返回密码登录
+                </button>
+              </div>
+            )}
+              </>
             )}
           </div>
 
@@ -767,9 +830,22 @@ export default function AdminPage() {
                   </div>
                   <div className="flex items-center justify-between text-sm mt-2">
                     <span className="font-sans text-gray-500">Bin ID</span>
-                    <span className="font-mono text-xs text-gray-400">
-                      {jsonbinConfig?.binId ? `${jsonbinConfig.binId.slice(0, 8)}...${jsonbinConfig.binId.slice(-6)}` : "未配置"}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-xs text-gray-600 break-all max-w-[260px]">
+                        {jsonbinConfig?.binId || "未配置"}
+                      </span>
+                      {jsonbinConfig?.binId && (
+                        <button
+                          onClick={() => {
+                            navigator.clipboard.writeText(jsonbinConfig.binId);
+                            notify("Bin ID 已复制到剪贴板");
+                          }}
+                          className="rounded-lg font-semibold transition-all duration-200 bg-gray-50 border border-gray-200 px-2 py-1 text-xs hover:border-[#6366f1]/50 hover:text-[#6366f1] shrink-0"
+                        >
+                          复制
+                        </button>
+                      )}
+                    </div>
                   </div>
                   <div className="flex items-center justify-between text-sm mt-2">
                     <span className="font-sans text-gray-500">站点总数</span>
