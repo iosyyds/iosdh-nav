@@ -1,0 +1,262 @@
+"use client";
+
+import { useMemo, useRef, useState } from "react";
+import { categories, navGroups, type NavGroup, type Site } from "@/lib/sites";
+import SearchBox from "@/components/SearchBox";
+import SiteCard from "@/components/SiteCard";
+
+const ALL_CATS = Object.keys(categories);
+const TOTAL = ALL_CATS.reduce((n, c) => n + categories[c].length, 0);
+
+export default function Home() {
+  const [query, setQuery] = useState("");
+  const [activeGroup, setActiveGroup] = useState<string>("all");
+  const resultRef = useRef<HTMLDivElement>(null);
+
+  const q = query.trim().toLowerCase();
+
+  const filtered: { group: NavGroup; sites: Site[] }[] = useMemo(() => {
+    return navGroups
+      .filter((g) => activeGroup === "all" || g.id === activeGroup)
+      .map((g) => {
+        const sites = g.cats.flatMap((c) => categories[c] ?? []);
+        const matched = q
+          ? sites.filter(
+              (s) =>
+                s.name.toLowerCase().includes(q) ||
+                s.url.toLowerCase().includes(q) ||
+                s.desc.toLowerCase().includes(q)
+            )
+          : sites;
+        return { group: g, sites: matched };
+      })
+      .filter((x) => x.sites.length > 0);
+  }, [activeGroup, q]);
+
+  const matchedCount = filtered.reduce((n, x) => n + x.sites.length, 0);
+
+  const handleSearch = (v: string) => {
+    setQuery(v);
+    setActiveGroup("all");
+    requestAnimationFrame(() => {
+      resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  };
+
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  return (
+    <div className="flex flex-col flex-1">
+      {/* 顶部导航：左上 Logo，右上 导航 + 首要 CTA（Z 点 1/2） */}
+      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border border-gray-200 px-4 md:px-6 lg:px-8">
+        <div className="flex items-center justify-between max-w-6xl mx-auto gap-4 md:gap-6 h-16">
+          <a href="#" className="flex items-center gap-2.5 group">
+            <span className="h-9 w-9 rounded-xl bg-[#6366f1] text-white flex items-center justify-center font-bold tracking-tight text-lg shadow-lg shadow-[#6366f1]/25 transition-all duration-200 ease-out group-hover:scale-[1.02]">
+              甜
+            </span>
+            <span className="font-bold tracking-tight text-lg md:text-xl text-[#0f172a]">
+              甜甜导航
+            </span>
+          </a>
+          <nav className="hidden md:flex items-center gap-6 font-sans text-sm text-gray-600" aria-label="主导航">
+            <button onClick={() => scrollTo("featured")} className="hover:text-[#0f172a] transition-colors">热门网址</button>
+            <button onClick={() => scrollTo("all-groups")} className="hover:text-[#0f172a] transition-colors">全部收录</button>
+            <button onClick={() => scrollTo("footer")} className="hover:text-[#0f172a] transition-colors">关于本站</button>
+          </nav>
+          <a
+            href="#all-groups"
+            className="rounded-xl font-semibold transition-all duration-300 bg-[#6366f1] text-white shadow-lg shadow-[#6366f1]/25 hover:scale-[1.02] hover:shadow-xl hover:shadow-[#6366f1]/30 active:scale-95 px-4 md:px-5 py-2 text-sm md:text-base"
+          >
+            开始浏览
+          </a>
+        </div>
+      </header>
+
+      {/* Hero：中间对角线区域 = 核心价值主张（Z 点 3） */}
+      <section
+        id="featured"
+        className="bg-white text-[#0f172a] py-12 md:py-16 lg:py-20 px-4 md:px-6 lg:px-8"
+      >
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="font-bold tracking-tight text-4xl md:text-5xl lg:text-6xl">
+            专业 iOS 资源导航站
+          </h1>
+          <p className="font-sans text-base md:text-lg text-gray-600 max-w-xl mx-auto mt-5 leading-relaxed">
+            精选 {TOTAL} 个优质网站，覆盖 iOS 网盘、巨魔商店 IPA、快捷指令、
+            签名工具、AI 工具与设计资源，一键直达。
+          </p>
+          <div className="mt-8">
+            <SearchBox onSearch={handleSearch} />
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-3 mt-6 font-sans text-sm text-gray-600">
+            <span className="bg-gray-50 border border-gray-200 rounded-xl px-3 py-1.5">{TOTAL}+ 站点</span>
+            <span className="bg-gray-50 border border-gray-200 rounded-xl px-3 py-1.5">{navGroups.length} 大分类</span>
+            <span className="bg-gray-50 border border-gray-200 rounded-xl px-3 py-1.5">免费开放</span>
+          </div>
+        </div>
+      </section>
+
+      {/* 分类筛选：快速定位 */}
+      <section className="bg-gray-50 text-[#0f172a] py-8 px-4 md:px-6 lg:px-8 border-y border-gray-100">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <button
+              onClick={() => setActiveGroup("all")}
+              className={`rounded-xl font-semibold transition-all duration-300 px-4 py-2 text-sm active:scale-95 ${
+                activeGroup === "all"
+                  ? "bg-[#6366f1] text-white shadow-lg shadow-[#6366f1]/25"
+                  : "bg-white text-[#0f172a] border border-gray-200 hover:-translate-y-0.5 hover:shadow-md"
+              }`}
+            >
+              全部
+            </button>
+            {navGroups.map((g) => (
+              <button
+                key={g.id}
+                onClick={() => {
+                  setActiveGroup(g.id);
+                  setQuery("");
+                }}
+                className={`rounded-xl font-semibold transition-all duration-300 px-4 py-2 text-sm active:scale-95 ${
+                  activeGroup === g.id
+                    ? "bg-[#6366f1] text-white shadow-lg shadow-[#6366f1]/25"
+                    : "bg-white text-[#0f172a] border border-gray-200 hover:-translate-y-0.5 hover:shadow-md"
+                }`}
+              >
+                {g.icon} {g.name}
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 结果区 */}
+      <section
+        id="all-groups"
+        ref={resultRef}
+        className="bg-gray-50 text-[#0f172a] py-12 md:py-16 lg:py-20 px-4 md:px-6 lg:px-8 scroll-mt-20"
+      >
+        <div className="max-w-6xl mx-auto space-y-14 md:space-y-20">
+          {q && (
+            <div className="text-center">
+              <h2 className="font-bold tracking-tight text-2xl md:text-3xl">
+                搜索「{query}」
+              </h2>
+              <p className="font-sans text-sm text-gray-400 mt-2">
+                找到 {matchedCount} 个相关站点
+              </p>
+            </div>
+          )}
+          {filtered.map(({ group, sites }) => (
+            <div key={group.id} id={`group-${group.id}`} className="scroll-mt-20">
+              <div className="flex items-center justify-between gap-4 mb-6 md:mb-8">
+                <div>
+                  <h2 className="font-bold tracking-tight text-2xl md:text-3xl flex items-center gap-2">
+                    <span>{group.icon}</span>
+                    {group.name}
+                  </h2>
+                  <p className="font-sans text-sm text-gray-400 mt-1">{group.desc}</p>
+                </div>
+                <span className="font-sans text-xs text-gray-400 bg-white border border-gray-200 rounded-xl px-3 py-1.5 shrink-0">
+                  {sites.length} 个站点
+                </span>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
+                {sites.map((s) => (
+                  <SiteCard key={s.id} site={s} />
+                ))}
+              </div>
+            </div>
+          ))}
+          {filtered.length === 0 && (
+            <div className="text-center py-16">
+              <h3 className="font-bold tracking-tight text-xl text-[#0f172a]">
+                没有找到相关站点
+              </h3>
+              <p className="font-sans text-sm text-gray-400 mt-2">
+                换个关键词试试，或点击上方分类浏览
+              </p>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* 底部转化区：左下信任标识 + 右下最终 CTA（Z 点 4/5） */}
+      <section className="bg-white text-[#0f172a] py-12 md:py-16 lg:py-20 px-4 md:px-6 lg:px-8 border-t border-gray-100">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="text-center md:text-left">
+            <h2 className="font-bold tracking-tight text-2xl md:text-3xl">
+              收藏即达，永不迷路
+            </h2>
+            <p className="font-sans text-sm text-gray-600 mt-2 max-w-md mx-auto md:mx-0">
+              甜甜导航持续收录优质 iOS 与设计资源站点，免费开放，随时查看。
+            </p>
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 mt-5 font-sans text-sm text-gray-600">
+              <span className="flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-xl px-3 py-1.5">
+                {TOTAL}+ 精选站点
+              </span>
+              <span className="flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-xl px-3 py-1.5">
+                持续更新
+              </span>
+              <span className="flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-xl px-3 py-1.5">
+                永久免费
+              </span>
+            </div>
+          </div>
+          <a
+            href="#all-groups"
+            className="rounded-xl font-semibold transition-all duration-300 bg-[#6366f1] text-white shadow-lg shadow-[#6366f1]/25 hover:scale-[1.02] hover:shadow-xl hover:shadow-[#6366f1]/30 active:scale-95 px-8 py-3.5 text-base md:text-lg shrink-0"
+          >
+            立即开始浏览 →
+          </a>
+        </div>
+      </section>
+
+      {/* 页脚 */}
+      <footer
+        id="footer"
+        className="bg-gray-50 text-gray-600 py-10 md:py-12 px-4 md:px-6 lg:px-8"
+      >
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
+            <div>
+              <span className="font-bold tracking-tight text-lg md:text-xl text-[#0f172a]">
+                甜甜导航
+              </span>
+              <p className="font-sans text-sm mt-2 leading-relaxed">
+                专业 iOS 资源导航站，收录巨魔商店 IPA、签名工具、快捷指令、
+                AI 工具与设计资源。
+              </p>
+            </div>
+            <div>
+              <h4 className="font-bold tracking-tight text-base text-[#0f172a]">
+                热门分类
+              </h4>
+              <ul className="font-sans text-sm mt-3 space-y-2">
+                <li><button onClick={() => scrollTo("group-ios")} className="hover:text-[#6366f1] transition-colors">iOS 资源</button></li>
+                <li><button onClick={() => scrollTo("group-ai")} className="hover:text-[#6366f1] transition-colors">AI 工具</button></li>
+                <li><button onClick={() => scrollTo("group-cloud")} className="hover:text-[#6366f1] transition-colors">网盘云储</button></li>
+                <li><button onClick={() => scrollTo("group-tools")} className="hover:text-[#6366f1] transition-colors">常用工具</button></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold tracking-tight text-base text-[#0f172a]">
+                关于本站
+              </h4>
+              <p className="font-sans text-sm mt-3 leading-relaxed">
+                本站仅作网址导航与分享，所有站点版权归原作者所有，内容来自公开网络。
+              </p>
+            </div>
+          </div>
+          <div className="border-t border-gray-200 mt-8 pt-6 flex flex-col md:flex-row items-center justify-between gap-3 font-sans text-xs text-gray-400">
+            <span>© {new Date().getFullYear()} 甜甜导航 · 专业 iOS 资源导航站</span>
+            <span>精选优质网站 · 免费开放</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
