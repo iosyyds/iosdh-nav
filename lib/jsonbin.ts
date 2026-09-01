@@ -81,19 +81,39 @@ export async function createBin(
   return { success: true, binId, message: `Bin 创建成功：${binId}` };
 }
 
-// 验证 API Key 是否有效
+// 验证 API Key 是否有效（通过创建临时测试 Bin 验证）
 export async function verifyApiKey(apiKey: string): Promise<{ valid: boolean; message: string }> {
   if (!apiKey) return { valid: false, message: "API Key 为空" };
   try {
-    // 尝试获取用户信息来验证 key
-    const res = await fetch(`${API_BASE}/u`, {
-      headers: { "X-Master-Key": apiKey },
+    // 创建一个临时测试 Bin 来验证 Key
+    const res = await fetch(`${API_BASE}/b`, {
+      method: "POST",
+      headers: {
+        "X-Master-Key": apiKey,
+        "Content-Type": "application/json",
+        "X-Bin-Name": "_verify_temp",
+        "X-Bin-Private": "true",
+      },
+      body: JSON.stringify({ verify: true }),
     });
     if (res.ok) {
-      const json = (await res.json()) as { user?: { name?: string } };
-      return { valid: true, message: `验证成功：${json.user?.name ?? "有效用户"}` };
+      const json = (await res.json()) as { metadata?: { id?: string } };
+      // 清理临时 Bin
+      const tempId = json.metadata?.id;
+      if (tempId) {
+        try {
+          await fetch(`${API_BASE}/b/${tempId}`, {
+            method: "DELETE",
+            headers: { "X-Master-Key": apiKey },
+          });
+        } catch {
+          /* ignore cleanup error */
+        }
+      }
+      return { valid: true, message: "API Key 验证成功" };
     }
-    return { valid: false, message: `API Key 无效（HTTP ${res.status}）` };
+    const text = await res.text().catch(() => "");
+    return { valid: false, message: `API Key 无效（HTTP ${res.status}）：${text || res.statusText}` };
   } catch (e) {
     return { valid: false, message: `网络错误：${e instanceof Error ? e.message : String(e)}` };
   }
