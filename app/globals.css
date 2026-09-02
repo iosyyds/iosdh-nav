@@ -3,6 +3,11 @@
 :root {
   --background: #ffffff;
   --foreground: #0f172a;
+  /* 苹果安全区域 */
+  --sat: env(safe-area-inset-top);
+  --sar: env(safe-area-inset-right);
+  --sab: env(safe-area-inset-bottom);
+  --sal: env(safe-area-inset-left);
 }
 
 @theme inline {
@@ -16,6 +21,8 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -23,6 +30,51 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* 苹果手机优化 */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  overscroll-behavior-y: none;
+  /* 安全区域底部填充 */
+  padding-bottom: var(--sab);
+}
+
+/* 所有可点击元素移除苹果默认高亮 */
+a, button, [role="button"], input, textarea, select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 苹果手机按钮样式重置 */
+button, input[type="button"], input[type="submit"] {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* 触控目标最小 44px（苹果 HIG 建议） */
+@media (pointer: coarse) {
+  a, button, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* 滚动性能优化 */
+* {
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
+}
+
+/* 固定定位元素安全区域适配 */
+.sticky, .fixed {
+  padding-top: var(--sat);
+  padding-left: var(--sal);
+  padding-right: var(--sar);
+}
+
+/* 图片优化 */
+img {
+  -webkit-user-drag: none;
+  user-select: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -34,5 +86,27 @@ body {
   *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* 隐藏滚动条但保留滚动功能 */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* 选中文字颜色 */
+::selection {
+  background-color: rgba(99, 102, 241, 0.2);
+  color: #0f172a;
+}
+
+/* 苹果手机横屏优化 */
+@media (orientation: landscape) and (max-height: 500px) {
+  .sticky {
+    position: static !important;
   }
 }

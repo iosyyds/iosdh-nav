@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# 临时脚本和抓取文件
+sha0p.html
+add_sites.py
+parse_all.py
+parse_html.py
