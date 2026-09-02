@@ -127,10 +127,11 @@ export default function Home() {
       <TopAd />
 
       {/* 顶部导航：左上 Logo，右上 导航 + 首要 CTA（Z 点 1/2） */}
-      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border border-gray-200 px-4 md:px-6 lg:px-8">
-        <div className="flex items-center justify-between max-w-6xl mx-auto gap-4 md:gap-6 h-14 md:h-16">
-          <a href="#" className="flex items-center gap-2.5">
-            <AnimatedLogo size="md" />
+      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-gray-200 px-3 md:px-6 lg:px-8">
+        <div className="flex items-center justify-between max-w-6xl mx-auto gap-2 md:gap-6 h-14 md:h-16">
+          <a href="#" className="flex items-center gap-2 min-w-0">
+            <AnimatedLogo size="sm" />
+            <span className="font-bold tracking-tight text-base md:text-xl text-[#0f172a] truncate">甜甜导航</span>
           </a>
           <nav
             className="hidden md:flex items-center gap-6 font-sans text-sm text-gray-600"
@@ -164,10 +165,10 @@ export default function Home() {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden rounded-xl font-semibold transition-all duration-300 bg-white text-[#0f172a] border border-gray-200 p-2 hover:border-[#6366f1]/50 active:scale-95"
+              className="md:hidden h-9 w-9 rounded-xl font-semibold transition-all duration-300 bg-white text-[#0f172a] border border-gray-200 flex items-center justify-center hover:border-[#6366f1]/50 active:scale-95"
               aria-label="菜单"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 {mobileMenuOpen ? (
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 ) : (
@@ -177,7 +178,7 @@ export default function Home() {
             </button>
             <a
               href="#all-groups"
-              className="rounded-xl font-semibold transition-all duration-300 bg-[#6366f1] text-white shadow-lg shadow-[#6366f1]/25 hover:scale-[1.02] hover:shadow-xl hover:shadow-[#6366f1]/30 active:scale-95 px-3 py-1.5 text-xs md:px-5 md:py-2 md:text-base h-9 md:h-auto flex items-center"
+              className="h-9 rounded-xl font-semibold transition-all duration-300 bg-[#6366f1] text-white shadow-md shadow-[#6366f1]/20 hover:scale-[1.02] hover:shadow-lg hover:shadow-[#6366f1]/30 active:scale-95 px-3 text-xs md:px-5 md:py-2 md:text-base md:h-auto flex items-center"
             >
               开始浏览
             </a>
