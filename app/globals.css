@@ -1,5 +1,4 @@
 @import "tailwindcss";
-
 :root {
   --background: #ffffff;
   --foreground: #0f172a;
@@ -9,7 +8,6 @@
   --sab: env(safe-area-inset-bottom);
   --sal: env(safe-area-inset-left);
 }
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -17,14 +15,12 @@
     "Microsoft YaHei", "Noto Sans SC", "Segoe UI", sans-serif;
   --font-mono: "SF Mono", "JetBrains Mono", ui-monospace, monospace;
 }
-
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
-
 body {
   background: var(--background);
   color: var(--foreground);
@@ -76,7 +72,6 @@ img {
   -webkit-user-drag: none;
   user-select: none;
 }
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
