@@ -20,13 +20,18 @@ function gradientOf(id: string): string {
   return GRADIENTS[h % GRADIENTS.length];
 }
 
-// 获取网站 favicon（百度服务，国内稳定）
-function faviconUrl(url: string): string {
+// 获取网站 favicon 多源列表（按优先级排序）
+function faviconSources(url: string): string[] {
   try {
     const u = new URL(url);
-    return `https://favicon.baidu.com/${u.hostname}`;
+    const host = u.hostname;
+    return [
+      `https://${host}/favicon.ico`,
+      `https://www.google.com/s2/favicons?domain=${host}&sz=64`,
+      `https://icons.duckduckgo.com/ip3/${host}.ico`,
+    ];
   } catch {
-    return "";
+    return [];
   }
 }
 
@@ -37,12 +42,22 @@ export default function SiteCard({
   site: Site;
   category?: string;
 }) {
-  const [failed, setFailed] = useState(false);
-  // 优先用站点自带图标，否则用 favicon 服务
-  const iconUrl = site.icon && site.icon.startsWith("http")
-    ? site.icon
-    : faviconUrl(site.url);
-  const showDefault = failed || !iconUrl;
+  const [sourceIndex, setSourceIndex] = useState(0);
+  const [allFailed, setAllFailed] = useState(false);
+
+  // 优先用站点自带图标，否则用多源 favicon
+  const customIcon = site.icon && site.icon.startsWith("http") ? site.icon : null;
+  const sources = customIcon ? [customIcon] : faviconSources(site.url);
+  const currentIcon = sources[sourceIndex] || "";
+  const showDefault = allFailed || !currentIcon;
+
+  const handleIconError = () => {
+    if (sourceIndex < sources.length - 1) {
+      setSourceIndex(sourceIndex + 1);
+    } else {
+      setAllFailed(true);
+    }
+  };
 
   return (
     <a
@@ -63,13 +78,13 @@ export default function SiteCard({
         ) : (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={iconUrl}
+            src={currentIcon}
             alt=""
             loading="lazy"
             width={48}
             height={48}
-            className="h-full w-full object-cover"
-            onError={() => setFailed(true)}
+            className="h-full w-full object-contain p-1"
+            onError={handleIconError}
           />
         )}
       </span>

@@ -33,22 +33,23 @@ export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const resultRef = useRef<HTMLDivElement>(null);
 
-  // 加载云端数据 + 自动同步（每5分钟检查更新）
+  // 加载云端数据 + 自动同步（每3分钟检查更新）
   useEffect(() => {
     loadSiteData().then(setData);
     const timer = setInterval(() => {
       loadSiteData().then((newData) => {
         setData((prev) => {
-          // 简单比较：如果站点总数变化，说明数据有更新
-          const prevTotal = prev ? Object.values(prev.categories).reduce((n, c) => n + c.length, 0) : 0;
-          const newTotal = Object.values(newData.categories).reduce((n, c) => n + c.length, 0);
-          if (prevTotal !== newTotal) {
+          if (!prev) return newData;
+          // 比较数据内容（JSON字符串），检测是否真的有变化
+          const prevStr = JSON.stringify(prev.categories);
+          const newStr = JSON.stringify(newData.categories);
+          if (prevStr !== newStr) {
             return newData;
           }
           return prev;
         });
       });
-    }, 5 * 60 * 1000); // 5分钟
+    }, 3 * 60 * 1000); // 3分钟
     return () => clearInterval(timer);
   }, []);
 

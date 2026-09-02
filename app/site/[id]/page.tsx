@@ -11,38 +11,53 @@ interface SiteData {
 }
 
 function loadData(): SiteData {
-  const dataPath = join(process.cwd(), "public", "data", "sites.json");
-  const raw = readFileSync(dataPath, "utf-8");
-  return JSON.parse(raw);
+  const possiblePaths = [
+    join(process.cwd(), "public", "data", "sites.json"),
+    join(process.cwd(), "lib", "sitesData.json"),
+  ];
+  
+  for (const dataPath of possiblePaths) {
+    try {
+      const raw = readFileSync(dataPath, "utf-8");
+      const parsed = JSON.parse(raw);
+      if (parsed.categories && Object.keys(parsed.categories).length > 0) {
+        return parsed as SiteData;
+      }
+    } catch (e) {
+      // 继续尝试下一个路径
+    }
+  }
+  
+  return { navGroups: [], categories: {} };
 }
 
+const data = loadData();
+
 export async function generateStaticParams() {
-  const data = loadData();
   const ids: string[] = [];
   for (const sites of Object.values(data.categories)) {
     for (const s of sites) {
-      if (s.id) ids.push(s.id);
+      if (s.id) ids.push(String(s.id));
     }
   }
   return ids.map((id) => ({ id }));
 }
 
+function findSite(id: string): { site: Site | null; category: string } {
+  for (const [cat, sites] of Object.entries(data.categories)) {
+    const found = sites.find((s) => String(s.id) === String(id));
+    if (found) return { site: found, category: cat };
+  }
+  return { site: null, category: "" };
+}
+
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }): Promise<Metadata> {
-  const data = loadData();
-  let site: Site | null = null;
-  let category = "";
-  for (const [cat, sites] of Object.entries(data.categories)) {
-    const found = sites.find((s) => String(s.id) === String(params.id));
-    if (found) {
-      site = found;
-      category = cat;
-      break;
-    }
-  }
+  const { id } = await params;
+  const { site, category } = findSite(id);
 
   if (!site) {
     return {
@@ -52,7 +67,7 @@ export async function generateMetadata({
     };
   }
 
-  const title = `${site.name} - ${category} | 甜甜导航`;
+  const title = `${site.name} - ${category}`;
   const description = site.desc
     ? `${site.desc}。${site.name} 属于${category}分类，甜甜导航精选收录。`
     : `${site.name} - ${category}分类优质网站，甜甜导航精选收录。`;
@@ -84,17 +99,12 @@ export async function generateMetadata({
   };
 }
 
-export default function SiteDetailPage({ params }: { params: { id: string } }) {
-  const data = loadData();
-  let site: Site | null = null;
-  let category = "";
-  for (const [cat, sites] of Object.entries(data.categories)) {
-    const found = sites.find((s) => String(s.id) === String(params.id));
-    if (found) {
-      site = found;
-      category = cat;
-      break;
-    }
-  }
-  return <SiteDetail id={params.id} site={site} category={category} />;
+export default async function SiteDetailPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const { site, category } = findSite(id);
+  return <SiteDetail id={id} site={site} category={category} />;
 }

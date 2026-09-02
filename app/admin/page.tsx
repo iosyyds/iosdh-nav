@@ -179,6 +179,21 @@ export default function AdminPage() {
     }
   };
 
+  // 自动同步到云端（如果已配置 jsonbin）
+  const autoSyncToCloud = async (next: SiteData) => {
+    const config = loadJsonbinConfig();
+    if (!config || !config.binId || !config.apiKey) return; // 未配置则不同步
+    try {
+      const result = await updateBin(config, next);
+      if (result.success) {
+        clearLocalData();
+        console.log("[自动同步] 已同步到云端");
+      }
+    } catch (e) {
+      console.log("[自动同步] 失败，保留本地修改", e);
+    }
+  };
+
   const saveSite = (site: Site) => {
     if (!data) return;
     const list = data.categories[activeCat] ?? [];
@@ -202,17 +217,20 @@ export default function AdminPage() {
     }
     commitLocal(next);
     setEditing(null);
-    notify("已保存（本地生效，需同步到云端）");
+    notify("已保存，正在自动同步到云端…");
+    autoSyncToCloud(next);
   };
 
   const deleteSite = (id: string) => {
     if (!data) return;
     const list = data.categories[activeCat] ?? [];
-    commitLocal({
+    const next = {
       ...data,
       categories: { ...data.categories, [activeCat]: list.filter((s) => s.id !== id) },
-    });
-    notify("已删除");
+    };
+    commitLocal(next);
+    notify("已删除，正在自动同步到云端…");
+    autoSyncToCloud(next);
   };
 
   const addCategory = () => {
