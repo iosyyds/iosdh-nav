@@ -2,16 +2,16 @@
 import { useState } from "react";
 import type { Site } from "@/lib/sites";
 
-// 渐变色板：每个站点根据 id 选择不同的渐变
+// 渐变色板
 const GRADIENTS = [
-  "from-[#6366f1] to-[#8b5cf6]",
-  "from-[#06b6d4] to-[#0ea5e9]",
-  "from-[#f59e0b] to-[#f97316]",
-  "from-[#ec4899] to-[#a855f7]",
-  "from-[#10b981] to-[#14b8a6]",
-  "from-[#3b82f6] to-[#6366f1]",
-  "from-[#ef4444] to-[#f59e0b]",
-  "from-[#8b5cf6] to-[#ec4899]",
+  "from-indigo-500 to-purple-500",
+  "from-cyan-500 to-blue-500",
+  "from-amber-500 to-orange-500",
+  "from-pink-500 to-purple-500",
+  "from-emerald-500 to-teal-500",
+  "from-blue-500 to-indigo-500",
+  "from-red-500 to-amber-500",
+  "from-purple-500 to-pink-500",
 ];
 
 function gradientOf(id: string): string {
@@ -20,7 +20,7 @@ function gradientOf(id: string): string {
   return GRADIENTS[h % GRADIENTS.length];
 }
 
-// 获取网站 favicon 多源列表（按优先级排序）
+// favicon 多源，优先 Google（稳定，返回 PNG）
 function faviconSources(url: string): string[] {
   try {
     const u = new URL(url);
@@ -43,81 +43,73 @@ export default function SiteCard({
   category?: string;
 }) {
   const [sourceIndex, setSourceIndex] = useState(0);
-  const [allFailed, setAllFailed] = useState(false);
-  const [imgLoaded, setImgLoaded] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
-  // 优先用站点自带图标，否则用多源 favicon
   const customIcon = site.icon && site.icon.startsWith("http") ? site.icon : null;
   const sources = customIcon ? [customIcon] : faviconSources(site.url);
-  const currentIcon = sources[sourceIndex] || "";
-  const showDefault = allFailed || !currentIcon;
+  const currentSrc = sources[sourceIndex] || "";
+  const showFallback = failed || !currentSrc;
 
-  const handleIconError = () => {
+  const handleError = () => {
     if (sourceIndex < sources.length - 1) {
       setSourceIndex(sourceIndex + 1);
-      setImgLoaded(false);
+      setLoaded(false);
     } else {
-      setAllFailed(true);
+      setFailed(true);
     }
   };
 
   return (
     <a
       href={`/site/${encodeURIComponent(site.id)}/`}
-      title={`查看「${site.name}」详情`}
-      className="group relative bg-white rounded-2xl shadow-sm border border-gray-100 text-center p-3 md:p-5 flex flex-col items-center gap-2 md:gap-3 transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-xl hover:shadow-[#6366f1]/30 hover:border-[#6366f1]/30 overflow-hidden"
+      className="group relative bg-white rounded-2xl border border-gray-100 p-3.5 flex flex-col items-center text-center transition-all duration-200 hover:shadow-lg hover:shadow-indigo-500/10 hover:border-indigo-200 hover:-translate-y-0.5 active:scale-[0.98]"
     >
-      {/* subtle top accent on hover */}
-      <span
-        className="absolute inset-x-0 top-0 h-0.5 bg-[#6366f1] opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-        aria-hidden="true"
-      />
-
-      {/* 图标容器：始终有浅灰背景，透明图标也能看到 */}
-      <span className={`relative h-12 w-12 md:h-14 md:w-14 rounded-xl overflow-hidden ${showDefault ? `bg-gradient-to-br ${gradientOf(site.id)}` : "bg-gray-50"} flex items-center justify-center shrink-0 shadow-sm`}>
-        {showDefault ? (
-          <span className="font-bold tracking-tight text-lg md:text-xl text-white select-none">
-            甜
-          </span>
+      {/* 图标 */}
+      <div className={`relative w-12 h-12 rounded-xl overflow-hidden flex items-center justify-center shrink-0 ${
+        showFallback ? `bg-gradient-to-br ${gradientOf(site.id)}` : "bg-gray-50"
+      }`}>
+        {showFallback ? (
+          <span className="text-white font-bold text-lg select-none">甜</span>
         ) : (
           <>
-            {/* 图片未加载时显示渐变甜字占位 */}
-            {!imgLoaded && (
-              <span className={`absolute inset-0 bg-gradient-to-br ${gradientOf(site.id)} flex items-center justify-center`}>
-                <span className="font-bold tracking-tight text-lg md:text-xl text-white select-none">甜</span>
-              </span>
+            {/* 加载中显示甜字占位 */}
+            {!loaded && (
+              <div className={`absolute inset-0 bg-gradient-to-br ${gradientOf(site.id)} flex items-center justify-center`}>
+                <span className="text-white font-bold text-lg select-none">甜</span>
+              </div>
             )}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={currentIcon}
-              alt=""
-              loading="lazy"
+              src={currentSrc}
+              alt={site.name}
               width={48}
               height={48}
-              className={`h-full w-full object-contain p-1 transition-opacity duration-200 ${imgLoaded ? "opacity-100" : "opacity-0"}`}
-              onError={handleIconError}
-              onLoad={() => setImgLoaded(true)}
+              loading="lazy"
+              className={`w-full h-full object-contain p-1.5 transition-opacity duration-200 ${loaded ? "opacity-100" : "opacity-0"}`}
+              onError={handleError}
+              onLoad={() => setLoaded(true)}
             />
           </>
         )}
-      </span>
+      </div>
 
-      <span className="w-full flex flex-col items-center min-w-0">
-        <span className="block w-full font-bold tracking-tight text-sm md:text-base text-[#0f172a] group-hover:text-[#6366f1] transition-colors duration-200 truncate">
-          {site.name}
+      {/* 名称 */}
+      <h3 className="mt-2.5 w-full font-semibold text-sm text-gray-900 truncate group-hover:text-indigo-600 transition-colors">
+        {site.name}
+      </h3>
+
+      {/* 描述 */}
+      <p className="mt-1 w-full text-xs text-gray-400 truncate min-h-[1rem]">
+        {site.desc || "\u00A0"}
+      </p>
+
+      {/* 分类标签 */}
+      {category && (
+        <span className="mt-2 inline-flex items-center text-[10px] text-gray-400 bg-gray-50 border border-gray-100 rounded-lg px-2 py-0.5 group-hover:border-indigo-200 group-hover:text-indigo-500 transition-colors">
+          {category}
         </span>
-        {/* 描述区：始终占位，统一高度，长描述截断为一行 */}
-        <span className="block w-full font-sans text-xs text-gray-400 mt-1 leading-relaxed truncate min-h-[1.25rem]">
-          {site.desc || "\u00A0"}
-        </span>
-        {category ? (
-          <span className="inline-block font-sans text-[10px] md:text-[11px] text-gray-400 bg-gray-50 border border-gray-100 rounded-lg px-2 py-0.5 mt-1.5 group-hover:border-[#6366f1]/30 group-hover:text-[#6366f1] transition-colors duration-200">
-            {category}
-          </span>
-        ) : (
-          <span className="mt-1.5 h-[1.25rem]" aria-hidden="true" />
-        )}
-      </span>
+      )}
     </a>
   );
 }
