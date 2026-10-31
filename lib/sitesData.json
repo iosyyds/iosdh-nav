@@ -4486,6 +4486,12 @@
         "name": "remove.bg",
         "url": "https://www.remove.bg/",
         "desc": "在线抠图工具"
+      },
+      {
+        "id": "agent-qa",
+        "name": "agent-qa",
+        "url": "https://vostride.com",
+        "desc": "vostride 的网页与移动端 AI 测试工具，结合 memidex 持久记忆、经验证的自我改进、MCP 和可回看的运行证据；模型费用另计。"
       }
     ],
     "网盘云储": [
